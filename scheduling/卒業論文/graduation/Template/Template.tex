@@ -1,0 +1,120 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% システム最適化研究室 卒業論文テンプレート（2016 年度版）
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,12pt,fleqn]{jarticle}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ascmac}
+%\usepackage{graphicx}
+%%%%%%%%%%%追加した（各自必要に応じて追加してください）%%%%%%%%%%%%%%%
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{array,booktabs}
+\usepackage{fancybox}
+\usepackage{here}
+\usepackage{slashbox}
+\usepackage{url}
+\usepackage{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textwidth      16.0cm
+\textheight     25.0cm
+\oddsidemargin   0.5cm
+\evensidemargin  0.5cm
+\topmargin      -1.0cm
+\footskip        1.0cm
+
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 表紙出力（ただし卒論には綴じない．表紙は別途作成する）
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{empty}
+\begin{center}
+ \ \\
+ \vspace{8cm}
+ \begin{Large}
+   {\bf 卒業論文タイトル}\\
+ \end{Large}
+ \vspace{2cm}
+ \begin{large}
+  {\bf システム最適化研究室} \\
+  {\bf 都 13-120　若林 祐麻}
+ \end{large}
+\end{center}
+
+%% vspace のあとの寸法は，出来上がりイメージを見て適宜修正すること
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 目次出力
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapter\documentclass[]{jreport}，\documentclass[]{jbook} 環境でないため使えません
+% 章は\section，節は\subsection，小節は\subsubsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagenumbering{arabic}
+\section{はじめに}
+はじめます．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{章}
+\subsection{節}
+\subsubsection{小節}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{章}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{章}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{章}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{章}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{おわりに}
+おわります．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section*{謝辞}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 参考文献
+% 本文で参照する際は\citeを使用
+\newpage
+\begin{thebibliography}{99}
+\bibitem{GLPK}GLPK - GNU Project - Free Software Foundation (FSF), \par \verb|https://www.gnu.org/software/glpk/| ($2016$年$11$月$25$日確認).
+\bibitem{CPLEX}IBM CPLEX Optimizer - United States, \par \verb|http://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/| \par ($2016$年$11$月$25$日確認).
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+% 付録になると章番号がアルファベットに変わります．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%付録%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{章}
+\subsection{節}
+\subsection{節}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%% End of file %%%%%

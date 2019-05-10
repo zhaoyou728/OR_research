@@ -1,0 +1,344 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 都市システム工学科 特別研究概要テンプレート（2015 年度版）
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10pt]{jarticle}
+\usepackage{indentfirst}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath}
+\usepackage{array,booktabs}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{here}
+\usepackage{ascmac}
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+\usepackage{comment}
+\textwidth      18.0cm
+\textheight     27.0cm
+\oddsidemargin  -1.0cm
+\evensidemargin -1.0cm
+\topmargin      -2.3cm
+\footskip        0.5cm
+\columnsep       2.5zw
+
+\renewcommand{\baselinestretch}{0.95}
+\pagestyle{empty}
+
+\makeatletter
+\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus 
+ -.2ex}{2.3ex plus .2ex}{\normalsize \bf}}
+\def\subsection{\@startsection {subsection}{1}{\z@}{-3.5ex plus -1ex minus 
+ -.2ex}{2.3ex plus .2ex}{\normalsize \bf}}
+\makeatother
+
+\begin{document}
+\twocolumn[
+\begin{center}
+ \vspace{-2mm}
+ \begin{large}
+  {\bf 関心度の高い他研究室の発表聴講可能性を高める特別研究報告審査会スケジュールの作成}\\
+ \end{large}
+ \vspace{-2mm}
+\end{center}
+ {\bf システム最適化研究室}
+ \hfill {\bf 都 14-0033　大原 源悠}
+ \vspace{5mm}
+] % End of twocolumn
+
+%% vspace のあとの寸法は，出来上がりイメージを見て適宜修正すること
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-8mm}
+\section{はじめに}
+\vspace{-2.5mm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+私の所属する関西大学 環境都市工学部 都市システム工学科では，毎年 $2$ 月に「特別研究報告審査会」が開催され，学生は研究成果の発表を行わなければならない．例年，特別研究報告審査会は $3$ 部屋で実施している．具体的には，各時間帯（$1$ 日目AM，$1$ 日目PM，$2$ 日目AM）にそれぞれ $2$ セッションずつ実施することになっており，$1$ 部屋につき $6$ セッション，$3$ 部屋で計 $18$ セッションが行われる．
+ \vspace{-3mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.45]{gaiyou.png}
+     \vspace{-5mm}
+    \caption{特別研究報告審査会におけるセッションの構成}
+    \label{Session}
+  \end{center}
+\end{figure}
+
+ \vspace{-7mm}
+ この審査会スケジュールは，従来，教員が手作業で作成していた．しかし，このスケジュールの作成には，考慮すべき様々な条件がある．そのため作成担当の教員は，大変な手間と時間が必要になっていた．
+
+ そこで昨年度，本研究室での特別研究として，若林\cite{waka}が特別研究報告審査会のスケジュール作成自動化についての研究を行った．この研究ではスケジュール作成を最適化問題として定式化し，それを最適化ソルバを用いて解くことで，最適なスケジュールを得る手法を提案した．また，各研究室から情報を収集して最適化計算を行い，得られたスケジュールを PDF ファイルとして出力するインターフェースを開発した．
+
+ しかし，この研究ではいくつか修正すべき事項が挙げられていた．また，今年度教員に対し特別研究報告審査会に関するアンケートを実施したところ，ある教員から「研究内容が近い研究室の教員が，お互いの研究室の発表を聞けるようにしてほしい」という要望を頂いた．
+
+ そこで本研究では，昨年度の研究で挙げられた修正事項の改良と，頂いた要望を実現するスケジュールを作成するための最適化モデルを提案する．
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-4mm}
+\section{スケジュール作成問題の定式化の改良}
+\vspace{-2.5mm}
+本研究では，頂いた要望を実現するために，表\ref{tb:models}のような制約条件を追加した $2$種類のモデルを作成した．
+\begin{table}[H]
+  \begin{center}
+     \vspace{-5mm}
+    \caption{作成した$2$つのモデルと追加した制約条件}
+    \label{tb:models}
+    \begin{tabular}{c|p{6cm}} \toprule
+    モデル名 & 追加した制約条件　\\ \bottomrule
+    モデル$1$ & 関心度が高く発表を聞きに行きたい研究室に所属する学生同士の発表順番が重複しない\\
+    モデル$2$ & 関心度が高く発表を聞きに行きたい研究室同士の発表セッションが重複しない\\ \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+ \vspace{-6mm}
+しかし，モデル$1$に追加した制約条件を表現するには，昨年度のモデルにおける添字付けでは不十分であった．そこで本研究では，昨年度のモデルに対し添字の変更を行い，新たな制約条件を追加したモデルを作成した．ただし，本研究で作成した最適化モデルは，昨年度作成された最適化モデルから引用している．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-4mm}
+\subsection{追加した制約条件の内容} \label{sec:2}
+\vspace{-2.0mm}
+本研究では頂いた要望を実現するために，新たに$2$種類の制約条件を作成し，考慮制約として定式化した．
+
+$1$つ目の制約条件は「関心度が高く発表を聞きに行きたい研究室があった場合，その研究室に所属する学生同士の発表順番ができるだけ重複しないことが望ましい」という内容である．昨年度の研究で提案された最適化モデルでは，発表順番については考慮しておらず，発表セッションと発表教室のみを考慮していた．そのため，次の例のような問題が発生する可能性があった：例として，研究室$A$の教員が，研究室$B$の学生の発表を聞きたい場合を考える．仮に，スケジュールが図\ref{fig:befor}のようなものであった場合，教員$A$は，研究室$B$の学生の発表を聞きに行くことができない．
+ \vspace{-4mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.4]{befor.png}
+     \vspace{-9mm}
+    \caption{発表順序を考慮していないスケジュール}
+    \label{fig:befor}
+  \end{center}
+\end{figure}
+
+ \vspace{-7mm}
+しかし，発表順番を考慮しスケジュールを図\ref{fig:after}のように変更することで，教員$A$は自分の担当する学生の発表が終わり次第教室を移動し，研究室$B$の学生の発表を聞きに行くことが可能になる．
+ \vspace{-2mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.4]{after.png}
+     \vspace{-9mm}
+    \caption{発表順序を考慮したスケジュール}
+    \label{fig:after}
+  \end{center}
+\end{figure}
+
+\vspace{-7mm}
+$2$つ目の制約条件は「関心度が高く発表を聞きたい研究室があった場合，その研究室同士の発表セッションができるだけ重複しないことが望ましい」という内容である．先ほどの例と同じように，研究室$A$の教員が，研究室$B$の学生の発表を聞きたい場合を考える．仮にスケジュールが図\ref{fig:beforo} のようなものであった場合，研究室$A$と研究室$B$の発表セッションが重複しているため，図\ref{fig:befor}と同様に学生の発表順番が重複する可能性がある．
+ \vspace{-2mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.4]{befor2.png}
+     \vspace{-9mm}
+    \caption{発表セッション重複しているスケジュール}
+    \label{fig:beforo}
+  \end{center}
+\end{figure}
+
+\vspace{-7mm}
+しかし，$2$つの研究室の発表セッションが重複しないよう，スケジュールを図\ref{fig:aftero}のように変更すると，教員$A$は，自分の担当する研究室の発表セッション終了後，研究室$B$の学生が発表するセッションに参加し，発表を聞くことが可能になる．
+ \vspace{-4mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.4]{after2.png}
+     \vspace{-8.5mm}
+    \caption{発表セッションが重複していないスケジュール}
+    \label{fig:aftero}
+  \end{center}
+\end{figure}
+\vspace{-7mm}
+以上が，本研究で新たに作成した$2$つの制約条件の内容である．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-6mm}
+\section{インターフェースの利便性向上}
+\vspace{-2.5mm}
+本研究では，昨年度作成されたインターフェースを改良し，利便性の向上を行った．
+
+改良を行った点は，以下の$2$点である．
+\vspace{-2mm}
+\begin{itemize}
+\item 研究室データを記入する Excel ファイルの記入方法
+  \vspace{-2mm}
+\item バッチファイル自動作成機能の実装
+\end{itemize}
+
+ここでは紙面の都合上，前者についてのみ証明する．
+
+昨年度，各研究室に研究室データが記入された Excel ファイルを提出して頂いた．しかし，研究室によってこの Excelファイルへの記入方法が異なっており，一部を手動で修正する必要があった．
+そこで，本研究では，この Excel ファイルへの記入方法を改良し，記入方法の統一を行った．改良を行った点は以下のとおりである．
+\begin{itemize}
+  \vspace{-3mm}
+\item 研究室名\\
+  研究室名は，ドロップダウンメニューから選択するように改良した．
+ \vspace{-3mm}
+\item 研究室 ID\\
+研究室を識別するための研究室 ID は，研究室名を選択すると自動で入力されるように改良した．
+ \vspace{-3mm}
+\item 教員名\\
+教員名は「姓＋名」に統一し，ドロップダウンメニューから選択するように改良した．
+ \vspace{-3mm}
+\item 姓と名の間隔\\
+教員名，学生ともに姓名の間に全角でスペースを入れるように統一した．教員名はドロップダウンメニューから選択するように改良し，学生の氏名は，学籍番号を選択すると，その学籍番号に対応した学生の氏名が自動で入力されるように改良した．
+ \vspace{-3mm}
+\item 学籍番号\\
+学籍番号は数字を半角入力するように統一した．また，学籍番号の桁数は $6$ 桁に統一し，ドロップダウンメニューから選択するように改良した．
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-5mm}
+\section{今年度の特別研究報告審査会スケジュールの作成}
+\vspace{-2.5mm}
+本研究で作成した，今年度の特別研究報告審査会のスケジュールについて説明する．
+
+本研究では，新たな制約条件を追加した $2$ つのモデル（モデル $1$，モデル $2$）を作成した．しかし，モデル $1$ は，関心度が高く発表を聞きに行きたい研究室の組合せが増えると，同一セッション内で複数回教室を移動しなければならない可能性があった．一方，モデル $2$ は，同一セッション内で教室を移動する必要はなく，移動回数が少ない．そこで，本研究では作成した $2$ つのモデルの内，モデル $2$ を使用しスケジュールを作成した．
+使用したデータは以下の通りである．
+\begin{itemize}
+\item 研究室数：$20$
+  \vspace{-2.5mm}
+\item 学生数：$128$人
+  \vspace{-2.5mm}
+\item 一体運用する研究室の組合せ
+  \vspace{-2.5mm}
+  \begin{itemize}
+  \item 都市地域計画研究室と交通システム研究室
+  \end{itemize}
+  \vspace{-2.5mm}
+\item 同じセッションで発表することが望ましい学生の組合せ
+  \begin{itemize}
+    \vspace{-2.5mm}
+  \item 社会システム研究室の学生$2$名
+  \end{itemize}
+  \vspace{-2.5mm}
+\item 関心度が高く発表を聞きに行きたい研究室の組合せ：表\ref{tb:kumi}の通り
+\end{itemize}
+\vspace{-2.5mm}
+\begin{table}[H]
+  \begin{center}
+     \vspace{-5mm}
+    \caption{関心度が高い研究室の組合せ}
+    \label{tb:kumi}
+    \begin{tabular}{c|c|c} 
+      & $A$ & $B$\\ \bottomrule
+      $1$ & 海岸工学 & 環境防災水工学\\
+      $2$ & コンクリート工学 & 複合材料構造\\
+      $3$ & 複合材料構造 & 構造工学\\
+      $4$ & 複合材料構造 & 鋼構造デザイン\\
+      $5$ & オペレーションズ・リサーチ & 社会システム\\
+      $6$ & オペレーションズ・リサーチ & システム最適\\
+    \end{tabular}
+  \end{center}
+\end{table}
+\vspace{-3.5mm}
+
+実際に作成したスケジュールを確認すると，表\ref{tb:kumi}の研究室の発表セッションは図\ref{fig:g}のようになっていた．
+ \vspace{-3mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.45]{g.png}
+     \vspace{-8mm}
+    \caption{作成したスケジュール}
+    \label{fig:g}
+  \end{center}
+\end{figure}
+\vspace{-5mm}
+図\ref{fig:g}を見ると，表\ref{tb:kumi}の $A$ と $B$ の研究室の発表セッションは重複していないことが確認できる．つまり，今年度のスケジュールでは，関心度が高く発表を聞きに行きたい研究室同士の発表セッションはすべて重複しないようなスケジュールを作成することができた．
+  
+
+
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \vspace{-4mm}
+%% \subsection{計算環境}
+%% \vspace{-2.0mm}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 　本実験では以下の計算環境を用いた：
+%% \vspace{-3mm}
+%% \begin{itemize}
+%% \item OS : Microsoft Windows 10 Pro
+%% \vspace{-2.5mm}
+%% \item CPU : Intel(R) Core(TM) i7-5600U CPU @ 2.60GHz
+%% \vspace{-7.3mm}
+%% \item メモリ : 8.00GB
+%% \vspace{-2.5mm}
+%% \item 使用ソルバ : IBM ILOG CPLEX $12.6.1.0$
+%% \end{itemize}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \vspace{-6mm}
+%% \subsection{実験内容}
+%% \vspace{-2.0mm}
+%% 本研究では実験を行い以下の検証を行った．
+%% \vspace{-2mm}
+%%  \begin{itemize}
+%% \item \ref{sec:2}節で説明した$2$種類の制約条件を追加した$2$つのモデルで，制約条件を満たしたスケジュールが作成可能かどうかの検証
+%%  \vspace{-2mm}
+%% \item 考慮制約に重み付けを行い，目的関数や違反量に変化が現れるかどうかの検証
+%%  \end{itemize}
+%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \vspace{-7mm}
+%% \subsection{実験結果}
+%% \vspace{-2.0mm}
+
+%% 実験結果を表\ref{tb:jk1}，\ref{tb:jk2}に記す．
+%% \vspace{-5.0mm}
+%% \begin{table}[H]
+%%   \begin{center}
+%%     \caption{スケジュールが作成可能かどうかの実験結果}
+%%     \label{tb:jk1}
+%%     \begin{tabular}{r|ccc} \toprule
+%%      モデル & 求解時間（秒） & 目的関数 & gap (\%)\\ \toprule
+%%      モデル$1$ & $188$ & $46$ & $0$ \\
+%%      モデル$2$ & $891$ & $46$ & $0$ \\ \bottomrule
+%%       \end{tabular}
+%%   \end{center}
+%% \end{table}
+%% \vspace{-5.0mm}
+
+%% \vspace{-5.0mm}
+%% \begin{table}[H]
+%%   \begin{center}
+%%     \caption{重み付けによる目的関数の変化}
+%%     \label{tb:jk2}
+%%     \begin{tabular}{c|cccccc} \toprule
+%%   重みの有無 & 目的関数 & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\ \toprule
+%%   重みなし & $47$ & $1$ & $1$ & $44$ & $0$ & $1$ \\
+%%   $p_5$に重み付け & $49$ & $1$ & $1$ & $44$ & $3$ & $0$\\ \toprule
+%%     \end{tabular}
+%%   \end{center}
+%%   \vspace{-2.0mm}
+%% $p_1$, ..., $p_5$：考慮制約 $1$, ..., 考慮制約 $5$ での違反量の合計
+%% \end{table}
+
+%% \vspace{-5.0mm}
+%% 表\ref{tb:jk1}を見ると，どちらのモデルでも制約条件を満たしたスケジュールが作成可能であることが確認できた．また，表\ref{tb:jk2}を見ると，考慮制約に重み付けを行うことで，違反量が変化することが確認できた．つまり，重み付けを行うことで考慮制約の重要度を調整することが可能であることが確認できた．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-4mm}
+\begin{thebibliography}{9}
+\vspace{-2.5mm}
+\bibitem{waka}若林裕麻，特別研究報告審査会のスケジュール作成の自動化，関西大学 都市システム工学科（$2017$）
+%\bibitem{WCSP}茨木俊秀，メタヒューリスティクスによる汎用問題解決システムの構築（科学研究費補助金　研究成果報告書）(2004).
+
+%\bibitem{都市12}
+%	都市 太郎，レジュメのフォーマット，システム出版，2012.
+%
+%\bibitem{日本道路協会96}
+%	日本道路協会：道路橋示方書・同解説IV下部構造編，pp. 110-119, 1996.
+%
+%\bibitem{Shepard50}
+%	Shepard, F. P. and Inman, D. L.: Nearshore water circulation
+%	related to bottom topography and wave refraction, Trans. AGU.,
+%	Vol. 31, No. 2, 1950.
+%
+%\bibitem{ワイリー73}
+%	C. R. ワイリー（富久 泰明 訳）：工業数学（上），pp. 123-140，ブ
+%	レイン図書，1973.
+%	
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+%%%%% End of file %%%%%

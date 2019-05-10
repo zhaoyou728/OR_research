@@ -1,0 +1,218 @@
+\documentclass[14pt,dvipdfmx]{beamer}
+
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage{txfonts}
+\usepackage{ascmac}
+
+%\mathversion{bold}
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}[default][center]
+\usefonttheme{professionalfonts}
+%
+\newcommand{\bd}[1]{\mbox{\boldmath $#1$}}
+\def\smskip{\par\vskip 5pt}
+\def\QED{\hfill $\Box$ \smskip}
+%
+\title[第$4$章　文の推敲]{第$4$章　文の推敲}
+\author[都$14-33$大原源悠]{都$14-33$　大原源悠 \\ システム最適化研究室}
+\institute[システム最適化研究室]{}
+\date{December $8$, $2017$}
+
+\begin{document}
+%
+\frame{\titlepage}
+%
+
+\frame{
+  \frametitle{この章で学ぶこと}
+  %
+  文を書くにあたって，
+  \begin{itemize}
+  \item どのような文が誤解されやすいか
+  \item どう書き直せば誤解されなくなるか
+  \end{itemize}
+  %
+  という点について学ぶ
+}
+
+\frame{
+  \frametitle{誤解される文とは ($1/2$) }
+  %
+  \begin{itembox}[l]{リスと私}
+   私はカメラを抱えたまま寄ってきたリスにクルミをあげた．
+  \end{itembox}
+  この文章はどのような情景を描いているだろうか
+    
+}
+
+\frame{
+  \frametitle{誤解される文章とは ($2/2$) }
+  %
+  $2$つの読み方ができる
+  \begin{itemize}
+  \item カメラを抱えているのは私
+    \begin{itemize}
+    \item リスが寄ってきたので，私はカメラを抱えたままで\\
+      クルミをあげた
+    \end{itemize}
+    \end{itemize}
+    \begin{itemize}
+    \item カメラを抱えていたのはリス
+      \begin{itemize}
+      \item 高度な知能を持ったリスが寄ってきたので，\\
+        私はクルミをあげた
+      \end{itemize}
+    \end{itemize}
+    このような誤解を受けないように注意する点が\\いくつかある
+  %
+}
+
+\frame{
+  \frametitle{短くする}
+  %
+  \begin{itembox}[l]{悪い例}
+    私はカメラを抱えたまま寄ってきたリスにクルミをあげた．
+  \end{itembox}
+  悪い点：複数の動詞が一つの文で使われている
+  %
+  \begin{itembox}[l]{改善例$1$：読点を打つ}
+    私はカメラを抱えたまま，寄ってきたリスにクルミをあげた．
+  \end{itembox}
+  \begin{itembox}[l]{改善例$2$：語順を変える}
+    寄ってきたリスに，私はカメラを抱えたままクルミをあげた．
+  \end{itembox}
+}
+
+\frame{
+  \frametitle{「の」の数に注意（$1/2$） }
+  %
+  \begin{itembox}[l]{悪い例：「の」が多すぎる}
+   反応の速度の測定の結果のデータの処理のための\\プログラムが必要です．
+  \end{itembox}
+  
+  悪い点：「の」が多すぎて読みにくい
+  
+  \begin{itembox}[l]{改善例：「の」を減らす}
+    反応速度の測定結果を処理するプログラムが\\必要です．
+  \end{itembox}
+  %
+}
+
+\frame{
+  \frametitle{「の」の数に注意（$2/2$）}
+  %
+  「の」を減らす方法
+    \begin{itemize}
+    \item 単純に「の」を減らす
+      \begin{itemize}
+      \item 「反応の速度」→「反応速度」
+      \end{itemize}
+      
+    \item 冗長な部分を省く
+      \begin{itemize}
+      \item 「処理のための」→「処理の」
+      \end{itemize}
+      
+    \item 「の」を別の語に変える
+      \begin{itemize}
+      \item 「処理のプログラム」→「処理するプログラム」
+      \end{itemize}
+    \end{itemize}
+  %
+}
+
+\frame{
+  \frametitle{明確にする}
+  %
+  文を明確にし，誤解を生まないようにする
+  \begin{itembox}[l]{ 悪い例：複数の対応関係が不明確}
+    Table$1$とTable$2$に示した加算と乗算の表を\\見てください．
+  \end{itembox}
+
+  悪い点：対応関係が不明確
+  \begin{itembox}[l]{改善例：複数の対応関係を明確にした}
+    加算の表（Table$1$）と乗算の表（Table$2$）を\\見てください．
+  \end{itembox}
+  複数の対応関係を明確にすることで誤解を\\生まなくなる
+  %
+}
+
+\frame{
+  \frametitle{言外の意味（$1/2$）}
+  %
+  \begin{beamerboxesrounded}[shadow=false]
+    {言外の意味とは}
+    文章を読んでいると「文字としては書かれていないが，自然と心に浮かんでくる意味」がある．\\
+    これを
+    \begin{bfseries}
+      言外の意味
+    \end{bfseries}
+    という．
+  \end{beamerboxesrounded}
+  %
+  \begin{itembox}[l]{例}
+    薬品 A は，薬品 B とは反応しない
+  \end{itembox}
+  「薬品 B とは」とわざわざ書かれているため，\\「 A と B 以外の薬品が存在するのかも」と感じる
+}
+
+\frame{
+  \frametitle{言外の意味（$2/2$）}
+  %
+  \begin{itembox}[l]{改善例}
+    薬品 A は，薬品 B とは反応しない．それは薬品 B に含まれていいる成分が……だからである．\\
+    このように，薬品 A は薬品 B とは反応しないが，\\薬品 C とは反応する．なぜなら，薬品 C は薬品 B とは違い，……だからである．
+  \end{itembox}
+  読者に「疑問」や「不満」を感じさせないようにする必要がある
+  %
+}
+
+\frame{
+  \frametitle{二重否定を避ける}
+  %
+  二重否定は，誤解を生む可能性がある
+  \begin{itembox}[l]{二重否定の例}
+    この公式で解が求められない$2$次方程式はない．
+  \end{itembox}
+  %
+  二重否定を避けることで，文がすっきりする
+  \begin{itembox}[l]{改善例}
+    どんな$2$次方程式の解も，この公式で求められる．
+  \end{itembox}
+  %
+  さまざまな書き方が可能なので，前後の文脈や文章の流れを考えつつ書き換えてみることが重要
+}
+
+\frame{
+  \frametitle{この章のまとめ}
+  %
+  読者に誤解を与えないために注意する点がある
+  \begin{itemize}
+  \item 文を短くする
+  \item 「の」の数に注意する
+  \item 明確な文を書く
+  \item 言外の意味に注意する
+  \item 二重否定に注意する
+  \end{itemize}
+  %
+  文を推敲するときには
+  \begin{bfseries}
+      わざと意地悪な読み方をする
+  \end{bfseries}
+  ことが大切．
+  \\誤解する可能性を少しでも減らした文にすることを\\心掛けよう．
+}
+
+\end{document}
+
+%%%%% End of file %%%%%
