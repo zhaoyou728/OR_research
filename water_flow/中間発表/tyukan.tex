@@ -1,0 +1,319 @@
+\documentclass[12pt,dvipdfmx]{beamer}
+% pdfの栞の字化けを防ぐ
+% \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+% テーマ
+%\usetheme{AnnArbor}
+\usetheme{Madrid}
+% navi. symbolsは目立たないが，dvipdfmxを使うと機能しないので非表示に
+\setbeamertemplate{navigation symbols}{} 
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% フォントはお好みで
+\usepackage{txfonts}
+%\mathversion{bold}
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}[default][center]
+\usefonttheme{professionalfonts}
+%
+
+\newcommand{\bd}[1]{\mbox{\boldmath $#1$}}
+\def\smskip{\par\vskip 5pt}
+\def\QED{\hfill $\Box$ \smskip}
+%}
+\title[中間発表]{現場の状況を考慮した\\止水板最適設置順序算出モデルの改良}
+\author[システム最適化研究室]{都14-86 竹内 美紗\\システム最適化研究室}
+\date{2017/8/1}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\frame
+%    {
+%      \frametitle{タイトル候補}
+%
+%     \begin{itemize}
+%        \small
+%      \item 計算時間の短縮を目的とした止水板最適設置順序算出モデルの改良
+%        \bigskip
+%             
+%      \item 現場の状況を考慮した止水板最適設置順序算出モデルの改良
+%        \bigskip
+%      
+%      \item 止水板設置チームの区画を考慮した最適な設置順序算出を\\目的とする最適化モデルの改良
+%        \bigskip
+%      
+%      \item 止水板設置チームを区画ごとに分けた場合の最適設置順序の算出
+%        \bigskip
+%     
+%      \item 止水板設置チームの区画を考慮しない場合と考慮した場合の比較
+%      \end{itemize}
+%      
+%
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{研究の背景(1/3)}
+
+      \begin{itemize}
+      \item 近年，日本の豪雨の発生回数は増加している
+      \end{itemize}
+      
+      \begin{figure}[tpb]
+        \begin{center}
+          \includegraphics[scale=0.16]<1>{50mm_hour.eps}
+          \includegraphics[scale=0.16]<2>{80mm_hour.eps}
+        \end{center}
+      \end{figure}
+      
+
+}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{研究の背景(2/3)}
+
+      \begin{minipage}{0.6\columnwidth}
+        \centering
+      \begin{beamerboxesrounded}
+        {福岡水害}
+        \begin{itemize}
+          \footnotesize
+        \item 1999年6月29日発生
+
+        \item 福岡市を流れる三笠川があふれて市中心が\\冠水し，博多駅や地下施設に水が流入した.
+
+        \item 地下鉄については道路の水が出入り口階段5カ所から流入し，最大25cm浸水した.
+
+        \end{itemize}
+      \end{beamerboxesrounded}
+      
+
+      \begin{beamerboxesrounded}
+        {九州北部豪雨}
+          \begin{itemize}
+            \footnotesize
+        \item 2017年7月5日発生
+
+        \item 福岡県と大分県を中心とした九州北部で発生した集中豪雨.
+
+        \item 最多雨量は福岡県阿蘇市で1時間108mmを記録した.
+
+        \end{itemize}
+      \end{beamerboxesrounded}
+      \end{minipage}
+      \begin{minipage}{0.39\columnwidth}
+        \centering
+        \bigskip
+        \begin{figure}[htbp]
+          \includegraphics[scale=0.54]{hukuoka.pdf}
+        \end{figure}
+        \begin{figure}[H]
+          \footnotesize
+          \includegraphics[scale=0.32]{kyusyu.pdf}
+        \end{figure}
+      \end{minipage}
+      
+          
+
+
+    }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+     {
+       \frametitle{研究の背景(3/3)}
+
+       \begin{itemize}
+       \item 近年，豪雨の事例が増加しており，地下街への浸水の危険性が\\高まってきている.
+       \item 梅田の地下街を対象として，下水道施設を考慮した内水氾濫解析\footnote{森兼，石垣，尾崎，戸田，大規模地下空間を有する都市域における地下域における地下空間への内水氾濫水の流入特性とその対策，水工学論文集，第55巻，2011年.}が行われており，事前に止水活動や避難誘導が可能であることが示されている.
+       \end{itemize}
+
+       \begin{beamerboxesrounded}
+             {流入開始時刻を考慮した地下街出入り口への\\最適な止水板設置順序の算出(馬谷，2016年卒業論文)}
+             \begin{itemize}
+             \item 地下街の浸水対策として止水板の最適な設置順序を算出
+             \item 最適化問題として定式化してソルバで求解
+             \end{itemize}
+       \end{beamerboxesrounded}
+       
+             
+     }
+     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{本研究の対象地区}
+
+      \begin{minipage}{0.4\columnwidth}
+        \centering
+      \begin{itemize}
+      \item 対象地区：梅田地下街
+        \medskip
+
+      \item 出入り口数 : 129カ所
+        \begin{itemize}
+        \item 2m幅 : 49カ所
+        \item 4m幅 : 80カ所
+        \end{itemize}
+      \end{itemize}
+      \end{minipage}
+      \begin{minipage}{0.4\columnwidth}
+        \centering
+      \begin{figure}[H]
+        \includegraphics[scale=0.72]{umedamap3.pdf}
+          \caption{梅田地下街図}
+      \end{figure}
+      \end{minipage}
+
+    }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{先行研究(馬谷，2016年度) (1/2)}
+
+      \begin{itemize}
+      \item 止水板の最適な設置順序の算出
+        \begin{itemize}
+        \item 最適化問題として定式化し，最適化ソルバを用いて解く.
+        \end{itemize}
+      \end{itemize}
+
+      \footnotesize
+      \begin{beamerboxesrounded}
+        {最適化問題 : 定式化}
+        \begin{description}
+          \footnotesize
+        \item [目的関数]「流入開始時刻に間に合わなかった出入り口の止水板設置完了\\時刻」と「流入開始時刻」の差の合計を最小にする
+        \item [制約条件1]初期状態の設定
+        \item [制約条件2]流入する出入口に止水板を設置する
+        \item [制約条件3]各設置チームは移動の際に高々1つの出入口に存在することが\\できる
+        \item [制約条件4]枝と接点の関係性
+        \item [制約条件5]出入口間の移動時間を求める
+        \item [制約条件6]各出入口の流入開始時刻を求める
+        \item [制約条件7]止水板設置完了時刻を求める
+        \end{description}
+      \end{beamerboxesrounded}
+      
+
+    }
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{先行研究(馬谷，2016年度) (2/2)}
+
+      \begin{itemize}
+      \item 計算時間の上限を86400秒(= 24時間)に設定し最適解を計算
+        \begin{itemize}
+        \item 計算時間が86400秒を超える場合は暫定解を表示
+        \end{itemize}
+      \end{itemize}
+
+      \begin{center}
+      \begin{tabular}{lrrr}
+        \hline
+        チーム数 & 計算時間(秒) & 流入時間の合計(分) \\
+        \hline
+        4     & 86400 & 57.06\\
+        5     & 59610 & 34.55\\
+        6     & 20875 & 31.36\\
+        7     & 1446 & 31.36\\
+        \hline
+      \end{tabular}
+      \end{center}
+      
+      
+      \begin{beamerboxesrounded}
+        {}
+        止水板設置チーム数が増えるほど地下街に流入する時間は短く\\なるが，チーム数が一定の数まで増えると変化はなくなる．\\チーム数が増えるほど計算時間も短くなる.
+          
+
+      \end{beamerboxesrounded}
+      
+    }
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{本研究の目標}
+      目標1 : 現場で考慮すべき制約条件を追加した最適化モデルの改良\\目標2 : 計算時間の短縮を目的とした最適化モデルの改良
+
+      \begin{minipage}{0.6\columnwidth}
+        \centering
+      \begin{beamerboxesrounded}
+        {}
+        \footnotesize
+      \begin{itemize}
+      \item 昨年の研究では，各チームが全ての\\出入口へ移動可能としている.
+      \item しかし，梅田地下街は6区画に分けられており，管理主体がそれぞれ異なる.
+      \end{itemize}
+      
+      $\Rightarrow$ 区画を考慮して最適化モデルの改良を行う\\
+      $\Rightarrow$ 区画を考慮しない場合との比較を行う
+      \end{beamerboxesrounded}
+             
+      \begin{beamerboxesrounded}
+        {}
+        \footnotesize
+      \begin{itemize}
+      \item 1時間あたりの降雨量を増やした場合，\\流入する出入り口の数が増え，計算時間が大幅に長くなる.
+      \end{itemize}
+      
+        $\Rightarrow$ 最適化モデルの改良が必要
+      \end{beamerboxesrounded}
+      \end{minipage}
+      \begin{minipage}{0.3\columnwidth}
+        \centering
+        \begin{figure}[H]
+          \footnotesize
+          \includegraphics[scale=0.38]{umedamap2.pdf}
+          \caption{最適設置順序}
+        \end{figure}
+      \end{minipage}
+      
+        
+
+    }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame
+    {
+      \frametitle{おわりに}
+
+      \begin{beamerboxesrounded}
+        {まとめ}
+        \begin{itemize}
+        \item 豪雨による地下街への浸水への危険性が高まっている
+%          \item 止水板設置チームは全ての出入口への移動が可能である
+        \item 止水板最適設置順序の算出を最適化問題として定式化し，\\最適化ソルバを用いて求解する
+        \item 止水板設置チームは全ての出入口への移動が可能である
+        \item ただし最適化計算に時間がかかる場合がある
+        \end{itemize}
+      \end{beamerboxesrounded}
+      \bigskip
+
+      \begin{beamerboxesrounded}
+        {今後の課題}
+        \begin{itemize}
+        \item 梅田地下街の区画を考慮した最適化モデルの改良 
+        \item 計算時間短縮を目的とした最適化モデルの改良
+        \item 区画を考慮した場合と考慮しない場合の比較
+        \end{itemize}
+      \end{beamerboxesrounded}
+
+    }
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+
+      
+    
+\end{document}
+
+%%%% End of file %

@@ -1,0 +1,8 @@
+-q
+-dNOPAUSE
+-sDEVICE=pbmraw
+-sOUTPUTFILE=seigyo1.jpg.pbm
+-r300
+-g827x432
+tmp$.ps
+quit.ps

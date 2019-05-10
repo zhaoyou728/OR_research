@@ -1,0 +1,77 @@
+
+Gurobi 7.0.1 (win64) logging started 12/18/17 16:17:14
+
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file whity_2team.lp
+Reading time = 0.03 seconds
+Objective: 4430 rows, 1642 columns, 17442 nonzeros
+Optimize a model with 4430 rows, 1642 columns and 17442 nonzeros
+Variable types: 36 continuous, 1606 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [7e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 2086 rows and 410 columns
+Presolve time: 0.09s
+Presolved: 2344 rows, 1232 columns, 8096 nonzeros
+Variable types: 0 continuous, 1232 integer (1232 binary)
+Found heuristic solution: objective 89.0909091
+
+Root relaxation: objective 5.310723e+01, 474 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   53.10723    0  176   89.09091   53.10723  40.4%     -    0s
+H    0     0                      85.3030303   53.10723  37.7%     -    0s
+H    0     0                      62.2727273   53.10723  14.7%     -    0s
+     0     0   53.77339    0  158   62.27273   53.77339  13.6%     -    0s
+     0     0   53.77975    0  158   62.27273   53.77975  13.6%     -    0s
+     0     0   53.87759    0  162   62.27273   53.87759  13.5%     -    0s
+H    0     0                      61.9090909   53.87759  13.0%     -    0s
+     0     0   53.87997    0  178   61.90909   53.87997  13.0%     -    0s
+     0     0   53.99848    0  182   61.90909   53.99848  12.8%     -    0s
+     0     0   53.99848    0  179   61.90909   53.99848  12.8%     -    0s
+     0     0   54.12882    0  197   61.90909   54.12882  12.6%     -    0s
+     0     0   54.15947    0  195   61.90909   54.15947  12.5%     -    0s
+     0     0   54.18999    0  194   61.90909   54.18999  12.5%     -    0s
+     0     0   54.19004    0  190   61.90909   54.19004  12.5%     -    0s
+     0     0   54.23431    0  204   61.90909   54.23431  12.4%     -    0s
+     0     0   54.23438    0  205   61.90909   54.23438  12.4%     -    0s
+     0     0   54.26714    0  219   61.90909   54.26714  12.3%     -    0s
+     0     0   54.26844    0  200   61.90909   54.26844  12.3%     -    0s
+     0     0   54.28689    0  182   61.90909   54.28689  12.3%     -    0s
+     0     0   54.28766    0  183   61.90909   54.28766  12.3%     -    0s
+     0     0   54.30758    0  201   61.90909   54.30758  12.3%     -    0s
+     0     0   54.30828    0  217   61.90909   54.30828  12.3%     -    0s
+     0     0   54.33062    0  213   61.90909   54.33062  12.2%     -    0s
+     0     0   54.33153    0  209   61.90909   54.33153  12.2%     -    0s
+     0     0   54.33587    0  217   61.90909   54.33587  12.2%     -    0s
+     0     0   54.33587    0  212   61.90909   54.33587  12.2%     -    0s
+     0     2   54.33587    0  212   61.90909   54.33587  12.2%     -    0s
+  1183   647   60.00288   18  119   61.90909   56.60029  8.58%  32.9    5s
+  8150   804     cutoff   38        61.90909   59.93434  3.19%  25.2   10s
+
+Cutting planes:
+  Gomory: 3
+  Implied bound: 4
+  Inf proof: 1
+  Zero half: 51
+
+Explored 9785 nodes (229915 simplex iterations) in 11.52 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 4: 61.9091 62.2727 85.303 89.0909 
+Pool objective bound 61.9091
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.190909090909e+01, best bound 6.190909090909e+01, gap 0.0000%
+
+Wrote result file 'whity_2team.sol'
+

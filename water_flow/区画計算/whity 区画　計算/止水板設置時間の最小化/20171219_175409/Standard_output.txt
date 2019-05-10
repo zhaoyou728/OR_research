@@ -1,0 +1,96 @@
+
+c:\tomcat8.5\bin>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\20171219_175409 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\20171219_175409>glpsol -m waterstop_5.mod -d whity_2team.dat --check --wcpxlp whity_2team.lp 
+Reading model section from waterstop_5.mod...
+waterstop_5.mod:58: warning: unexpected end of file; missing end statement inserted
+58 lines were read
+Reading data section from whity_2team.dat...
+277 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `whity_2team.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\20171219_175409>gurobi_cl ResultFile=whity_2team.sol LogFile=whity_2team.log TimeLimit=86400 Threads=4 whity_2team.lp 
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file whity_2team.lp
+Reading time = 0.02 seconds
+Objective: 4430 rows, 1642 columns, 17310 nonzeros
+Optimize a model with 4430 rows, 1642 columns and 17310 nonzeros
+Variable types: 36 continuous, 1606 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [7e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 2086 rows and 410 columns
+Presolve time: 0.07s
+Presolved: 2344 rows, 1232 columns, 8096 nonzeros
+Variable types: 0 continuous, 1232 integer (1232 binary)
+Found heuristic solution: objective 105.0909091
+
+Root relaxation: objective 6.910723e+01, 514 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   69.10723    0  183  105.09091   69.10723  34.2%     -    0s
+H    0     0                      98.2121212   69.10723  29.6%     -    0s
+H    0     0                      95.3030303   69.10723  27.5%     -    0s
+H    0     0                      90.4848485   69.10723  23.6%     -    0s
+H    0     0                      83.1818182   69.10723  16.9%     -    0s
+     0     0   69.62675    0  167   83.18182   69.62675  16.3%     -    0s
+     0     0   69.86682    0  188   83.18182   69.86682  16.0%     -    0s
+H    0     0                      78.2727273   69.86682  10.7%     -    0s
+     0     0   70.01366    0  164   78.27273   70.01366  10.6%     -    0s
+     0     0   70.11038    0  162   78.27273   70.11038  10.4%     -    0s
+H    0     0                      77.9090909   70.11038  10.0%     -    0s
+     0     0   70.11444    0  158   77.90909   70.11444  10.0%     -    0s
+     0     0   70.18679    0  197   77.90909   70.18679  9.91%     -    0s
+     0     0   70.19026    0  194   77.90909   70.19026  9.91%     -    0s
+     0     0   70.35111    0  169   77.90909   70.35111  9.70%     -    0s
+     0     0   70.35380    0  171   77.90909   70.35380  9.70%     -    0s
+     0     0   70.40071    0  190   77.90909   70.40071  9.64%     -    0s
+     0     0   70.41553    0  199   77.90909   70.41553  9.62%     -    0s
+     0     0   70.43990    0  202   77.90909   70.43990  9.59%     -    0s
+     0     0   70.44356    0  204   77.90909   70.44356  9.58%     -    0s
+     0     0   70.46037    0  229   77.90909   70.46037  9.56%     -    0s
+     0     0   70.46652    0  222   77.90909   70.46652  9.55%     -    0s
+     0     0   70.49285    0  218   77.90909   70.49285  9.52%     -    0s
+     0     0   70.49624    0  222   77.90909   70.49624  9.51%     -    0s
+     0     0   70.51437    0  222   77.90909   70.51437  9.49%     -    0s
+     0     0   70.52376    0  234   77.90909   70.52376  9.48%     -    0s
+     0     0   70.52376    0  234   77.90909   70.52376  9.48%     -    0s
+     0     2   70.52376    0  234   77.90909   70.52376  9.48%     -    1s
+
+Cutting planes:
+  Gomory: 3
+  Implied bound: 5
+  Zero half: 46
+
+Explored 5131 nodes (130850 simplex iterations) in 4.37 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 7: 77.9091 78.2727 83.1818 ... 105.091
+Pool objective bound 77.9091
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.790909090909e+01, best bound 7.790909090909e+01, gap 0.0000%
+
+Wrote result file 'whity_2team.sol'
+

@@ -1,0 +1,126 @@
+
+C:\tomcat8.5>cd C:\home\sumitomo\sol-server\system\Upfiles\k867828\20170203_171247_198 
+
+C:\home\sumitomo\sol-server\system\Upfiles\k867828\20170203_171247_198>glpsol -d 60_without_pump.dat -m waterstop_before50.mod --check --wcpxlp waterstop_before50.lp 
+Reading model section from waterstop_before50.mod...
+waterstop_before50.mod:53: warning: unexpected end of file; missing end statement inserted
+53 lines were read
+Reading data section from 60_without_pump.dat...
+1199 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `waterstop_before50.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\k867828\20170203_171247_198>gurobi_cl ResultFile=waterstop_before50.sol LogFile=waterstop_before50.log TimeLimit=86400 Threads=4 waterstop_before50.lp 
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_before50.lp
+Reading time = 0.44 seconds
+Objective: 62412 rows, 21852 columns, 239226 nonzeros
+Optimize a model with 62412 rows, 21852 columns and 239226 nonzeros
+Variable types: 108 continuous, 21744 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 28428 rows and 4368 columns
+Presolve time: 4.71s
+Presolved: 33984 rows, 17484 columns, 136044 nonzeros
+Variable types: 60 continuous, 17424 integer (17424 binary)
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.800000e+01   0.000000e+00      5s
+    4419    0.0000000e+00   0.000000e+00   0.000000e+00      7s
+
+Root relaxation: objective 0.000000e+00, 4419 iterations, 1.84 seconds
+Total elapsed time = 10.49s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   40          -    0.00000      -     -   10s
+H    0     0                     113.9090909    0.00000   100%     -   13s
+H    0     0                      44.7575758    0.00000   100%     -   14s
+     0     0    0.00000    0  131   44.75758    0.00000   100%     -   17s
+H    0     0                      31.4545455    0.00000   100%     -   20s
+     0     0    0.00000    0  101   31.45455    0.00000   100%     -   22s
+     0     0    0.00000    0   91   31.45455    0.00000   100%     -   24s
+H    0     0                      23.3030303    0.00000   100%     -   26s
+     0     0    0.00000    0   76   23.30303    0.00000   100%     -   26s
+     0     0    0.00000    0   64   23.30303    0.00000   100%     -   27s
+     0     0    0.00000    0   65   23.30303    0.00000   100%     -   29s
+     0     0    0.00000    0   32   23.30303    0.00000   100%     -   35s
+     0     0    0.00000    0   50   23.30303    0.00000   100%     -   36s
+     0     0    0.00000    0   28   23.30303    0.00000   100%     -   40s
+H    0     0                      22.2121212    0.00000   100%     -   41s
+     0     0    0.00000    0   29   22.21212    0.00000   100%     -   41s
+     0     0    0.00000    0   39   22.21212    0.00000   100%     -   44s
+     0     0    0.00000    0   36   22.21212    0.00000   100%     -   48s
+     0     0    0.00000    0   54   22.21212    0.00000   100%     -   51s
+     0     0    0.00000    0   54   22.21212    0.00000   100%     -   52s
+H    0     0                      11.3333333    0.00000   100%     -   54s
+H    0     0                       7.7272727    0.00000   100%     -   56s
+     0     2    0.00000    0   41    7.72727    0.00000   100%     -   58s
+     2     3    0.00000    1   54    7.72727    0.00000   100%  1716   91s
+H    3     3                       6.0000000    0.00000   100%  1144  100s
+H    4     3                       5.6969697    0.00000   100%   858  107s
+     5     4    0.00000    1   64    5.69697    0.00000   100%   686  110s
+     7     5    0.00000    1   57    5.69697    0.00000   100%   490  124s
+     8     6    0.00000    1  111    5.69697    0.00000   100%   429  128s
+     9     7    0.00000    1   56    5.69697    0.00000   100%   381  137s
+    11     8    0.00000    1   38    5.69697    0.00000   100%   312  146s
+    13     9    0.00000    1   42    5.69697    0.00000   100%   264  152s
+    15    11    0.00000    1   31    5.69697    0.00000   100%   229  157s
+    16    11    0.00000    1  101    5.69697    0.00000   100%   215  160s
+    17    12    0.00000    1   52    5.69697    0.00000   100%   202  166s
+    18    13    0.00000    1   91    5.69697    0.00000   100%   191  170s
+    20    14    0.00000    1   68    5.69697    0.00000   100%   172  175s
+    23    16    0.72874    1   66    5.69697    0.72874  87.2%   149  186s
+    24    17    0.76154    1  198    5.69697    0.76154  86.6%   143  193s
+    25    17    0.76496    1   75    5.69697    0.76496  86.6%   137  200s
+    29    20    0.76700    1  130    5.69697    0.76700  86.5%   118  209s
+    30    21    0.76813    1  134    5.69697    0.76813  86.5%   114  210s
+    33    23    1.03030    1   22    5.69697    1.03030  81.9%   104  216s
+    34    23    1.03030    1   30    5.69697    1.03030  81.9%   101  220s
+    36    25    1.03030    1   45    5.69697    1.03030  81.9%  95.3  225s
+    38    26    1.03030    1   29    5.69697    1.03030  81.9%  90.3  230s
+    45    32    1.03030    1   39    5.69697    1.03030  81.9%  5363  240s
+    47    34    1.03030    1   99    5.69697    1.03030  81.9%  5135  249s
+H   47    32                       4.2424242    1.03030  75.7%  5135  257s
+H   47    30                       3.9090909    1.03030  73.6%  5135  258s
+H   49    29                       1.4545455    1.03030  29.2%  4925  266s
+    52    31    1.03030    1   36    1.45455    1.03030  29.2%  4641  275s
+    54    32    1.03030    1   37    1.45455    1.03030  29.2%  4469  280s
+    58    35    1.03030    1   39    1.45455    1.03030  29.2%  4161  285s
+    60    36    1.03030    1   32    1.45455    1.03030  29.2%  4022  292s
+    62    38    1.03030    1   24    1.45455    1.03030  29.2%  3892  295s
+    66    42    1.03030    1   54    1.45455    1.03030  29.2%  5376  306s
+
+Explored 67 nodes (413815 simplex iterations) in 306.62 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 10: 1.45455 3.90909 4.24242 ... 31.4545
+Pool objective bound 1.45455
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.454545454545e+00, best bound 1.454545454545e+00, gap 0.0000%
+
+Wrote result file 'waterstop_before50.sol'
+

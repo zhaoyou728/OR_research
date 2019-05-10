@@ -1,0 +1,3 @@
+.\makedata\makedata.exe -C 2 -T 2 -v 1.0 -v 10.0
+glpsol.exe -m WFmodel_120202.mod -d .\makedata\Class_2_Term_2_data.dat --check --wlp WFModel_Class_2_Term_2.lp
+scip-2.1.1.mingw.x86_64.intel.opt.spx.exe -c "read WFModel_Class_2_Term_2.lp" -c "optimize" -c "write" -c "solution" -c "WFModel_Class_2_Term_2.sol" -c "quit"

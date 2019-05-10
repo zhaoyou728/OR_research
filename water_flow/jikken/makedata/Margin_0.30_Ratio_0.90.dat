@@ -1,0 +1,6 @@
+param M1 := 1000000;
+param M2 := 1000000;
+param cpd := 28349.999;
+param C := 1134.000;
+param STE_init := 14175.000;
+param margin := 0.300;

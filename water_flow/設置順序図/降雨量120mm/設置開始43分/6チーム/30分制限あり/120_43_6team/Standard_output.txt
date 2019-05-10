@@ -1,0 +1,82 @@
+
+c:\tomcat8.5\bin>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_6team 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_6team>glpsol -d 120_with_pump_whity_43min_6team.dat -m waterstop_5_180114.mod --check --wcpxlp waterstop_5_180114.lp 
+Reading model section from waterstop_5_180114.mod...
+waterstop_5_180114.mod:60: warning: unexpected end of file; missing end statement inserted
+60 lines were read
+Reading data section from 120_with_pump_whity_43min_6team.dat...
+946 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Generating TimeLimit...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `waterstop_5_180114.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_6team>gurobi_cl ResultFile=waterstop_5_180114.sol LogFile=waterstop_5_180114.log TimeLimit=3600 Threads=4 waterstop_5_180114.lp 
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114.lp
+Reading time = 0.21 seconds
+Objective: 47832 rows, 16866 columns, 185916 nonzeros
+Optimize a model with 47832 rows, 16866 columns and 185916 nonzeros
+Variable types: 108 continuous, 16758 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 21865 rows and 3451 columns
+Presolve time: 1.32s
+Presolved: 25967 rows, 13415 columns, 103938 nonzeros
+Variable types: 66 continuous, 13349 integer (13349 binary)
+
+Root relaxation: objective 0.000000e+00, 5078 iterations, 1.35 seconds
+Total elapsed time = 5.26s
+Total elapsed time = 11.08s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   51          -    0.00000      -     -   13s
+     0     0    0.00000    0   68          -    0.00000      -     -   15s
+     0     0    0.00000    0  114          -    0.00000      -     -   16s
+     0     0    0.00000    0  114          -    0.00000      -     -   16s
+     0     0    0.00000    0   41          -    0.00000      -     -   20s
+     0     0    0.00000    0   47          -    0.00000      -     -   20s
+     0     0    0.00000    0  127          -    0.00000      -     -   25s
+     0     0    0.00000    0  133          -    0.00000      -     -   27s
+H    0     0                       0.0000000    0.00000      -     -   31s
+     0     0    0.00000    0   84    0.00000    0.00000      -     -   31s
+
+Cutting planes:
+  Clique: 3
+  MIR: 2
+  StrongCG: 4
+  GUB cover: 2
+  Zero half: 10
+
+Explored 0 nodes (80094 simplex iterations) in 31.45 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 1: 0 
+Pool objective bound 0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap -
+
+Wrote result file 'waterstop_5_180114.sol'
+

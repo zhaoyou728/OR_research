@@ -1,0 +1,83 @@
+
+Log started (V12.6.1.0) Wed Dec 13 11:09:42 2017
+
+
+Problem '1213.lp' read.
+Read time = 0.03 sec. (0.48 ticks)
+Tried aggregator 2 times.
+MIP Presolve eliminated 2064 rows and 300 columns.
+MIP Presolve modified 154 coefficients.
+Aggregator did 22 substitutions.
+Reduced MIP has 2344 rows, 1320 columns, and 8360 nonzeros.
+Reduced MIP has 1320 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.03 sec. (18.51 ticks)
+Found incumbent of value 84.757576 after 0.08 sec. (30.69 ticks)
+Probing fixed 88 vars, tightened 0 bounds.
+Probing changed sense of 110 constraints.
+Probing time = 0.09 sec. (99.02 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 0 rows and 88 columns.
+Reduced MIP has 2344 rows, 1232 columns, and 8096 nonzeros.
+Reduced MIP has 1232 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (5.51 ticks)
+Probing time = 0.02 sec. (4.03 ticks)
+Clique table members: 4304.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.03 sec. (23.53 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                           84.7576       36.0000            57.53%
+*     0+    0                           83.2727       36.0000            56.77%
+      0     0       50.1072   180       83.2727       50.1072      312   39.83%
+*     0+    0                           61.2121       50.1072            18.14%
+      0     0       50.5114   180       61.2121      Cuts: 35      423   17.48%
+      0     0       50.7159   176       61.2121      Cuts: 11      495   17.15%
+      0     0       50.8296   171       61.2121      Cuts: 26      544   16.96%
+      0     0       50.8437   191       61.2121      Cuts: 14      572   16.94%
+*     0+    0                           59.2727       50.8437            14.22%
+      0     2       50.8437   191       59.2727       50.8437      572   14.22%
+Elapsed time = 0.77 sec. (512.53 ticks, tree = 0.00 MB, solutions = 4)
+*    41    19      integral     0       59.2424       50.9497     2632   14.00%
+    152    82       51.5304   190       59.2424       50.9693     6913   13.96%
+    429   300       55.8990   132       59.2424       51.2052    16880   13.57%
+*   589+  420                           59.2121       51.3201            13.33%
+    740   500        cutoff             59.2121       52.0082    26999   12.17%
+    912   601       59.0452   111       59.2121       52.1648    32027   11.90%
+   1243   798       57.8482   102       59.2121       52.5353    39425   11.28%
+   1593   993       55.4380    73       59.2121       53.2717    47096   10.03%
+   1859  1151       56.5021   115       59.2121       53.4833    52447    9.68%
+   2257  1345        cutoff             59.2121       53.9657    60631    8.86%
+*  2443+  953                           58.9091       54.3581             7.73%
+   2443   954       51.3087   217       58.9091       54.3581    64498    7.73%
+   2451   716       58.4448    83       58.9091       54.3581    65637    7.73%
+Elapsed time = 5.98 sec. (4817.27 ticks, tree = 7.50 MB, solutions = 7)
+   2936   358       57.3030    45       58.9091       54.3581    76684    7.73%
+   3698   937       57.5033    98       58.9091       54.3581    97909    7.73%
+   4599  1484       56.8644    87       58.9091       54.3581   121756    7.73%
+
+Clique cuts applied:  263
+Zero-half cuts applied:  31
+Gomory fractional cuts applied:  11
+
+Root node processing (before b&c):
+  Real time             =    0.77 sec. (511.43 ticks)
+Parallel b&c, 4 threads:
+  Real time             =   18.61 sec. (14060.87 ticks)
+  Sync time (average)   =    1.23 sec.
+  Wait time (average)   =    1.27 sec.
+                          ------------
+Total (root+branch&cut) =   19.38 sec. (14572.30 ticks)
+
+Solution pool: 7 solutions saved.
+
+MIP - Integer optimal, tolerance (0.0001/1e-006):  Objective = 5.8909090909e+001
+Current MIP best bound = 5.8906726222e+001 (gap = 0.00236469, 0.00%)
+Solution time =   19.39 sec.  Iterations = 148344  Nodes = 5509 (1955)
+Deterministic time = 14572.30 ticks  (751.50 ticks/sec)
+
+
+Incumbent solution written to file '1213.sol'.

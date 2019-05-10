@@ -1,0 +1,81 @@
+
+C:\tomcat8.5>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity2_before50 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity2_before50>glpsol -m waterstop_before50.mod -d whity_2team.dat --check --wcpxlp whity_2team.lp 
+Reading model section from waterstop_before50.mod...
+waterstop_before50.mod:53: warning: unexpected end of file; missing end statement inserted
+53 lines were read
+Reading data section from whity_2team.dat...
+276 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `whity_2team.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity2_before50>gurobi_cl ResultFile=whity_2team.sol LogFile=whity_2team.log TimeLimit=86400 Threads=4 whity_2team.lp 
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file whity_2team.lp
+Reading time = 0.03 seconds
+Objective: 4430 rows, 1642 columns, 16848 nonzeros
+Optimize a model with 4430 rows, 1642 columns and 16848 nonzeros
+Variable types: 36 continuous, 1606 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [7e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 2068 rows and 392 columns
+Presolve time: 0.09s
+Presolved: 2362 rows, 1250 columns, 9360 nonzeros
+Variable types: 18 continuous, 1232 integer (1232 binary)
+Found heuristic solution: objective 43.0000000
+
+Root relaxation: objective 0.000000e+00, 616 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    8   43.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   30   43.00000    0.00000   100%     -    0s
+H    0     0                      33.5454545    0.00000   100%     -    0s
+H    0     0                      21.2424242    0.00000   100%     -    0s
+     0     0    0.00000    0   18   21.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   18   21.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   34   21.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   34   21.24242    0.00000   100%     -    0s
+     0     0    0.00000    0    8   21.24242    0.00000   100%     -    0s
+     0     2    0.00000    0    8   21.24242    0.00000   100%     -    0s
+*   30    28               6      16.1212121    0.00000   100%  79.5    0s
+H   31    22                       0.0303030    0.00000   100%  77.0    0s
+*   75    20              16       0.0000000    0.00000      -  74.8    0s
+
+Cutting planes:
+  Implied bound: 6
+  MIR: 2
+  Zero half: 1
+
+Explored 95 nodes (9586 simplex iterations) in 0.68 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 6: 0 0.030303 16.1212 ... 43
+Pool objective bound 0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap -
+
+Wrote result file 'whity_2team.sol'
+

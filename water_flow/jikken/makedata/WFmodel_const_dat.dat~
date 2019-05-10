@@ -1,0 +1,25 @@
+param M1 := 1000000;
+param M2 := 1000000;
+param price :=
+0 9.00
+1 10.00
+2 11.00
+;
+param C := 0.0;
+
+param cpd := 31500;
+
+param allow_prod_1 :=
+0 0.6
+1 0.6
+2 0.6
+;
+
+param allow_prod_2 :=
+0 0.6
+1 0.6
+2 0.6
+;
+
+param allow_vl := 12600;
+param allow_vu := 18900;

@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mytabular.sty
+%
+% tabular環境で使用する\hlineのバリエーション集
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \fathline 太い罫線
+%
+\def\fathline{\noalign{\ifnum0=`}\fi\hrule height2pt
+  \futurelet \@tempa\@xhline}
+
+%
+% \doublehline 2重罫線(中央)
+% 罫線の幅の分だけ上下の行が狭くなるので、
+% それが気になる場合は\doublehlineu または\doublehlinel を使用し、
+% 調整を入れる。
+%
+\def\doublehline{\noalign{\ifnum0=`}\fi
+  \kern -1pt \hrule \@height \arrayrulewidth
+  \kern -\arrayrulewidth
+  \kern 2pt \hrule \@height \arrayrulewidth
+  \kern -1pt
+  \kern -\arrayrulewidth
+  \futurelet \@tempa\@xhline}
+
+%
+% \doublehlineu 2重罫線(上に出る)
+% 上の行に\vtop を使用してマージンを調節する。
+%
+\def\doublehlineu{\noalign{\ifnum0=`}\fi
+  \kern -2pt \hrule \@height \arrayrulewidth
+  \kern -\arrayrulewidth
+  \kern 2pt \hrule \@height \arrayrulewidth
+  \futurelet \@tempa\@xhline}
+
+%
+% \doublehlinel 2重罫線(下に出る)
+% 下の行に\vbox を使用してマージンを調節する。
+%
+\def\doublehlinel{\noalign{\ifnum0=`}\fi
+  \hrule \@height \arrayrulewidth
+  \kern -\arrayrulewidth
+  \kern 2pt \hrule \@height \arrayrulewidth
+  \kern -2pt
+  \futurelet \@tempa\@xhline}
+

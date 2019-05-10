@@ -1,0 +1,64 @@
+
+c:\tomcat8.5\bin>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43min_3team_60min 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43min_3team_60min>glpsol -d 120_with_pump_whity_43min_3team.dat -m waterstop_5_180114_kadou60.mod --check --wcpxlp waterstop_5_180114_kadou60.lp 
+Reading model section from waterstop_5_180114_kadou60.mod...
+waterstop_5_180114_kadou60.mod:60: warning: unexpected end of file; missing end statement inserted
+60 lines were read
+Reading data section from 120_with_pump_whity_43min_3team.dat...
+946 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Generating TimeLimit...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `waterstop_5_180114_kadou60.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43min_3team_60min>gurobi_cl ResultFile=waterstop_5_180114_kadou60.sol LogFile=waterstop_5_180114_kadou60.log TimeLimit=3600 Threads=4 waterstop_5_180114_kadou60.lp 
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_kadou60.lp
+Reading time = 0.11 seconds
+Objective: 23937 rows, 8433 columns, 92958 nonzeros
+Optimize a model with 23937 rows, 8433 columns and 92958 nonzeros
+Variable types: 54 continuous, 8379 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 10929 rows and 1722 columns
+Presolve time: 0.73s
+Presolved: 13008 rows, 6711 columns, 52245 nonzeros
+Variable types: 33 continuous, 6678 integer (6678 binary)
+
+Root relaxation: infeasible, 1407 iterations, 0.16 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 infeasible    0               - infeasible      -     -    1s
+
+Explored 0 nodes (1407 simplex iterations) in 1.11 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 0
+Pool objective bound 1e+100
+
+Model is infeasible
+Best objective -, best bound -, gap -
+
+Unable to retrieve attribute 'X'
+

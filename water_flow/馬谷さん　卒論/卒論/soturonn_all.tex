@@ -1,0 +1,1388 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% システム最適化研究室 卒業論文テンプレート（2016 年度版）
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+\documentclass[a4paper,12pt,fleqn]{jarticle}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ascmac}
+\usepackage[dvipdfmx]{hyperref}
+%\usepackage{graphicx}
+%%%%%%%%%%%追加した（各自必要に応じて追加してください）%%%%%%%%%%%%%%%
+\usepackage{comment}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{array,booktabs}
+\usepackage{fancybox}
+\usepackage{here}
+\usepackage{slashbox}
+\usepackage{url}
+\usepackage{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textwidth      16.0cm
+\textheight     25.0cm
+\oddsidemargin   0.5cm
+\evensidemargin  0.5cm
+\topmargin      -1.0cm
+\footskip        1.0cm
+
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 表紙出力（ただし卒論には綴じない．表紙は別途作成する）
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{empty}
+\begin{center}
+ \ \\
+ \vspace{8cm}
+ \begin{Large}
+   {\bf 流入開始時刻を考慮した地下街出入口への\\最適な止水板設置順序の算出}\\
+ \end{Large}
+ \vspace{2cm}
+ \begin{large}
+  {\bf システム最適化研究室} \\
+  {\bf 都 13-15 馬谷　慎太郎}
+ \end{large}
+\end{center}
+
+%% vspace のあとの寸法は，出来上がりイメージを見て適宜修正すること
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 目次出力
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapter\documentclass[]{jreport}，\documentclass[]{jbook} 環境でないため使えません
+% 章は\section，節は\subsection，小節は\subsubsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagenumbering{arabic}
+\section{はじめに}
+我が国は自然災害大国である．地震，津波，台風，噴火等災害にも様々あるが日本の災害発生率は他国よりも比較的高い．%私達はこれまで様々な災害と向き合ってきたが，いつも災害が発生してから災害の怖さを学んできた．近年は，南海トラフ地震が近いうちに発生すると懸念されているがいつ発生するのかは見当がつかない．
+災害の中でも水害，特に集中豪雨は頻繁かつ突発的に発生する．また，我が国の 1  時間降水量が 50 mm 以上である発生回数を 1982 年から 10 年毎で比較してみると増加傾向にあり \cite{気象庁,東京海上日動リスクコンサルティング株式会社} ，地下空間における浸水の危険性は高まっている．以下に，集中豪雨の例を挙げる．
+\begin{itemize}
+\item 岡崎豪雨\cite{岡崎豪雨,水工学論文集1}
+\begin{itemize}
+\item 2000 年 8 月 26 日から 31 日にかけて東海地方・関東地方を中心に大雨による豪雨が発生した．岡崎市美合町では最大 1 時間降水量が 146.5 mm と短い時間に集中的な大雨を記録した．岡崎市の矢作川水系では，乙川右岸の堤防が決壊，伊賀川右岸の護岸が崩壊などの被害が発生した．また，名古屋市でも床上・床下合わせて約 11000 世帯が浸水するなどの被害が発生した．
+\end{itemize}
+\item 東海豪雨\cite{水工学論文集1,東海豪雨}
+\begin{itemize}
+\item 2000 年 9 月 11 日から 12 日にかけて愛知・三重・岐阜などの東海地方を中心に集中的な豪雨が発生した．名古屋では総降雨量 567.0 mm という大雨を記録した．この豪雨により，名古屋市西区の庄内川水系新川などで長さ 100 m にわたる破堤があったほか，各地で河川の越流があり，愛知県を中心に 6 万棟を超える浸水被害が発生した．
+\end{itemize}
+\end{itemize}
+このような集中豪雨による被害は多発しており，今後なお増える可能性がある．このような豪雨が都市部で発生すると，雨水が地下街に流れ込む可能性がある．雨の降り始めから浸水発生までの時間が短いことや地下空間の閉鎖性を考慮すると，人的被害を軽減するためには適切な行動を取る必要がある．例えば，先行研究 \cite{水工学論文集2,水工学論文集1} の結果から事前に止水活動や避難誘導が可能であること分かっている．
+
+そこで，本研究では水害発生時の浸水対策の 1 つとして止水板を用いる．本研究では，止水板の設置を考慮した設置計画を最適化問題として解き，最適な設置順序を算出することを目指す．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%\section{章}
+%\subsection{節}
+%\subsubsection{小節}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{comment}
+\newpage
+\section{準備}
+\subsection{数理計画問題}
+数理計画問題\cite{数理計画入門}は以下のように表すことができる．\\
+\hspace{3.0cm}目的関数:\ $f(x)$\hspace{0.2cm}$\rightarrow$\hspace{0.2cm} 最小(あるいは最大)\\
+\hspace{3.0cm}制約条件:\ $x \in S$\\
+ここでは，変数$x$は$n$次元ベクトルであり，目的関数$f$は$n \in R^n$(n次元実ベクトル空間)上で定義された実数値関数である．また，制約条件を満たす$x$を実行可能解，その集まりである集合$S \subseteq R^n$を実行可能領域，実行可能解のなかで目的関数が最小(あるいは最大)となるもの最適解という．このような問題のことを数理計画問題(最適化問題)という．
+\begin{comment}
+\subsection{フロー保存則}
+グラフ$G(V,E)$上の流れのことをフローといい，本研究でフローを考慮する場合，フロー保存則を適用する．フロー保存則とはグラフ上のフローが各節点で保存されることである．フロー保存則をグラフ$G=(V,E)$上で定式化すると次のようになる．
+\begin{equation}
+\sum_{(i,v)\in E}x_{iv}=\sum_{(v,j)\in E}x_{vj},(v \in V,v \neq s,t)
+\end{equation}
+\begin{equation}
+\sum_{(s,j)\in E}x_{sj}=\sum_{(j,t)\in E}x_{jt}
+\end{equation}
+\begin{equation}
+x_{ij}\geq 0,((i,j)\in E)
+\end{equation}
+\end{comment}
+\subsection{ダイクストラ法}
+本研究では，梅田地下街の出入り口間の移動時間データを作成するためにダイクストラ法を使用する．ダイクストラ法\cite{数理計画入門}とは，グラフ $G=(V,E)$ における枝の長さ $a_{ij}$ に関する非負条件 $a_{ij} \geq 0 \ ((i,j)\in E)$ の仮定のもとで，節点 $s$ から各節点 $i \in V$ への最短路の長さの上限値を常に保持しながら，それらの値を最短路の長さとして更新していき，最終的には全ての節点に対する長さの上限値が $s$ から $i$ までの最短路の長さに等しくなるようにする反復法のことである．
+\subsection{最適化ソルバ}
+最適化ソルバとは，最適化問題の最適解を得るためのプログラムである．本研究で使用する最適化ソルバ GLPK, Gurobi について説明する．
+\begin{itemize}
+\item GLPK
+\begin{itemize}
+\item GLPK とは，GNU\ Linear\ Programming\ Kit\ の略でGNUが無料で配布しているソルバである．このソルバは最適化計算を行うだけでなく，GMPL で書かれたモデルとデータを用いて，LP 形式のファイルを作成することができる．
+\end{itemize}
+\item Gurobi
+\begin{itemize}
+\item Gurobi とは，Gurobi Optimizer の略であり，線形計画問題 (LP)，二次計画問題 (QL)，二次制約 (QCP)，混合整数計画 (MIP) を速く解くソルバの 1 つである．
+\end{itemize}
+本研究では，膨大なデータを扱うため Gurobi によって計算を行っている．
+\end{itemize}
+%\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{研究の背景と目的}
+本章では本研究の背景と目的について説明する．
+\subsection{背景}
+我が国の 1  時間降水量が 50 mm 以上である集中豪雨の発生回数を 1982 年から 10 年毎で比較してみると増加傾向にあり \cite{気象庁,東京海上日動リスクコンサルティング株式会社} ，地下空間における浸水の危険性は高まっている．以下に，地下空間への浸水で甚大な被害が出た例を挙げる．
+\begin{itemize}
+\item 福岡水害\cite{福岡水害_朝日新聞,福岡水害_国土交通省}
+\begin{itemize}
+\item 1999 年 6 月 29 日，福岡市を流れる三笠川があふれて市中心部が冠水し，博多駅や地下施設に水が流入した．地下の浸水面積は，博多駅一帯と天神地区合わせて約 88000m$^2$ に上った．博多駅周辺で地下施設を持つビル 182 棟のうち，地下が浸水したビルは 71 棟であり，そのうち地下 3 階まで浸水したビルは 3 棟，地下空間が完全に水没したビルは 10 棟あった．また地下鉄については，道路の水が出入り口階段 5 ヶ所から流入し，最大 25 cm 浸水した．この水は地下鉄ホーム，線路へと流れ込み線路の冠水が発生した．
+\end{itemize}
+\item　大阪ゲリラ豪雨\cite{大阪ゲリラ豪雨,大阪管区気象台}
+\begin{itemize}
+\item 2013 年 8 月 25 日，大阪市で 10 分間で 27.5mm の激しい雨が降った．大阪府では，床上浸水 44 棟,床下浸水 631 棟が発生した他，道路や商店街の冠水や土砂災害が発生し，交通機関に大きな影響がでた．
+\end{itemize}
+\end{itemize}
+近年，このような事例が増加しており，地下空間への浸水の危険性が高まってきている．そのため地下空間の水害に着目した研究が多く行われている．
+
+例えば先行研究 \cite{水工学論文集2,水工学論文集1} では，梅田の地下街を対象として下水道施設を考慮した内水氾濫解析が行われている．具体的には，岡崎豪雨・東海豪雨を外力と設定し，雨水流出解析モデルとして下水道施設および地表面の氾濫解析を同時に実施した．その結果，地下空間に流入する出入り口の場所，流入順序，流入時間，流入量を推定することができ，事前に止水活動や避難誘導が可能であることが分かった．
+\subsection{本研究の目的}
+先行研究 \cite{水工学論文集2,水工学論文集1} により，事前に止水活動や避難誘導が可能であることが示されたが，具体的な止水方法については示されていない．一方武田氏の研究 \cite{武田さん卒論} では，地下空間の浸水対策として止水板の設置が検討された．具体的には，
+\begin{itemize}
+\item 対象地区は whity （梅田大阪市北区）とする
+\item 止水板の配置人員を 2 人 1 組の 6組とする
+\item 人の歩行スピードを時速 4 kmとする
+\item 止水板の種類によって設置時間が異なる
+\end{itemize}
+などの条件の下で，止水板の設置順序や設置開始するタイミングが検討された．
+しかし，これでは梅田地下街全土を対象とした場合が分からないし，止水板の設置順序が本当に最適かどうか不十分である．そのため本研究では，梅田地下街の浸水対策として止水板の設置を考慮し，最適な設置順序を算出することを目的とする．ここでの最適な設置順序とは，各出入り口の流入開始時刻に間に合わなかった時間の合計が最小になるような設置順序を最適な設置順序とする．本研究では，この問題を最適化問題として定式化し，それを最適化ソルバを用いて解くことで，止水板の最適な設置順序を算出する．具体的には，梅田地下街における浸水被害の推定データを用いて数値実験を行い，止水板の最適な設置順序を算出する．
+%数値実験を行うデータにはポンプ稼働時とポンプ停止時がある．ここでのポンプとは雨水ポンプのことであり，地上に降る雨水が下水道管を通り河川に放流される．ポンプ稼働時と停止時では，最適な設置順序はどのようになるか検証してみる．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{comment}
+\newpage
+\section{止水板最適設置問題の定式化}
+本研究では推定された各出入口への流入開始時刻を考慮した止水板の最適な設置
+計画を最適化問題として定式化する．具体的には，各出入口において
+\[
+ \max\{\mbox{止水板設置完了時刻} - \mbox{流入開始時刻}, 0\}
+\]
+を算出し（すなわち，各出入口で雨水が流入している時間を求め），これらの和
+が最小になるような最適化問題を定式化する．
+\subsection{本研究の概要}
+本研究では，止水板設置完了時間が流入開始するまでの時間を上回っていた場合，間に合わなかった時間の合計が最小になる解を最適解とする．
+\subsection{本研究で扱うネットワーク}
+図 \ref{fig:nettowa-ku} は，地下街を想定したネットワークである．
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm,clip]{nettowa-ku.pdf}
+\caption{地下街のネットワーク}
+\label{fig:nettowa-ku}
+\end{figure}
+地下街を想定したグラフ $G=(V,E)$ を作る．出入口に相当する節点を $v \in
+V$ ， 出入口間の移動に相当する枝を  $(v_1,v_2)\in E$ で表す．
+%
+本研究で扱う最適化問題においては，止水板を設置するチームの行動を時間を追っ
+て表現する必要がある．そこで本研究では，このような問題を静的に解く手段と
+して広く用いられている時空間ネットワーク \cite{時空間ネットワーク} を用いる．
+
+時空間ネットワークとは，空間的広がりと時間的広がりを持つネットワークのことである．特に，時間方向に離散化することによって問題を静的に解く方法であり，動的に問題を解くことに比べて簡単に解を得ることができる．これを利用することにより，設置チームの動きを時間的に捉えることができる．
+地下街を想定した時空間ネットワークを図 \ref{fig:zikuukann} に示す．
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{./zikuukan_zu.pdf}
+\caption{時空間ネットワーク図}
+\label{fig:zikuukann}
+\end{figure}
+図 \ref{fig:zikuukann} では，止水板を設置する各チームの移動回数を
+$l=0,1,...k$ とし，これを時空間ネットワークにおけるレイヤに対応させる．
+%
+また各レイヤ上には出入口を配置し，設置チームがどの出入口に移動して止水板
+を設置するかを表現できるようになっている．
+\subsection{定式化}
+本節では，本研究で提案する最適化問題の定式化について説明する．
+\subsubsection{集合・パラメータ・変数}
+\begin{itemize}
+\item 集合    
+      \begin{itemize}
+      \item $V$： 節点(出入口)の集合
+      \item $E$： 枝(経路)の集合
+      \item $L$： レイヤの集合
+      \item $P$： 設置チームの集合
+      \end{itemize}
+\item パラメータ
+      \begin{itemize}
+      \item $w_e$： 枝の重み(移動時間)
+      \item $f_v$： 節点の流入開始時刻
+      \item $s$： スタート地点
+      \item $M$： 十分大きな正の定数
+      \item $u$： 止水板設置に要する時間
+      \end{itemize}
+\item 変数
+      \begin{itemize}
+      \item $x_{v,l,p}$：\ レイヤ $l$ において，設置チーム $p$ が節点
+	    $v$ に存在するかどうかを表す $0\mathchar`-1$ 変数
+	    %
+	    \[    x_{v,l,p}=\left \{
+	    \begin{array}{l}
+	     1,\hspace{0.1cm} レイヤ l において，設置チーム p は節点 v に存在する\\
+	     0,\hspace{0.1cm} レイヤ l において，設置チーム p は節点 v に存在しない \nonumber
+	    \end{array}
+	    \right.
+	    \]
+      \item $y_{e,l,p}$：\ レイヤ $l$ からレイヤ $(l + 1)$ にかけて，設置
+	    チーム $p$ が枝 $e$ を通過するかどうかを表す $0\mathchar`-1$
+	    変数
+      \[    y_{e,l,p}=\left \{
+      \begin{array}{l}
+      1,\hspace{0.1cm} レイヤ l から他( l + 1 ) にかけて，設置チーム pが枝 e を通過する\\
+      0,\hspace{0.1cm} レイヤ l から他( l + 1 ) にかけて，設置チーム pが枝 e を通過しない \nonumber
+      \end{array}
+      \right.
+      \]
+%\begin{itemize}
+%\item $z_{k,p,v}$:\ 節点がゴールになるかどうかを表す$0-1$変数
+%  \end{itemize}
+%\[    z_{k,p,v}=\left \{
+%\begin{array}{l}
+%  1,\hspace{0.1cm} 節点がゴールになる\\
+%  0,\hspace{0.1cm} 節点がゴールにならない \nonumber
+%\end{array}
+%\right.
+%\]
+%\begin{itemize}
+%\item 設置チームが節点に設置するかどうか表す$0-1$変数
+%  \end{itemize}
+%\[    u_{k,p,v}=\left \{
+%\begin{array}{l}
+%  1,\hspace{0.1cm} レイヤkの時に設置チームpが節点vに設置する\\
+%  0,\hspace{0.1cm} 設置しない \nonumber
+%\end{array}
+%\right.
+%\]
+%        \item $d$： 設置完了時刻 $-$ 流入開始時刻
+        \item $t_{l,p}$：\ レイヤ $l$ における設置チーム $p$ の設置完了時間
+        \item $\bar{t}_{l,p}$：\ レイヤ $l$ において設置チーム $p$ が止水板を設置する出入口の流入開始時刻 
+        \item $d_{l,p}$：\ レイヤ $l$ において設置チーム $p$ が止水板を設置する出入口の設置完了時刻と流入開始時刻の差
+        \end{itemize}
+\end{itemize}
+\subsubsection{制約条件}
+本節では，本問題で用いる制約条件について説明する．
+\begin{description}
+%
+ \item [制約条件 1] 全止水板設置チームはレイヤ $0$ ではスタート地点に存在
+	     する\\
+	     %
+	     全ての止水板設置チームは，スタート地点から移動を開始すること
+	     にする．この条件は式 (\ref{eq:Initialposition}) のように定式
+	     化することができる．
+	     \begin{equation}
+	      x_{s,0,p}=1 \quad (p \in P)\label{eq:Initialposition}
+	     \end{equation}
+	     %
+ \item [制約条件 2] 全出入口にはいずれかの設置チームが1度だけ存在する
+	     （$=$ 全出入口に止水板が設置される）
+	     \begin{equation}
+	      \displaystyle\sum_{l \in L, p \in P, l \geq 1}x_{v,l,p}=1 \quad (v \in V)\label{eq:AllWaterstop}
+	     \end{equation}
+	     式 (\ref{eq:AllWaterstop}) は，いずれかのレイヤでいずれかの
+	     設置チームが 1 度だけ存在する制約式である．
+
+	     式 (\ref{eq:AllWaterstop}) を理解するために具体例を考える：
+	     $V :=\{v_1, v_2, \ldots, v_n\}, L := \{0, 1, \ldots, t\}, P
+	     :=\{p_1,p_2\}$ として式 (\ref{eq:AllWaterstop}) を $v$ に
+	     ついて展開してみると
+	     \begin{eqnarray}
+	      && x_{v_1,1,p_1}+x_{v_1,1,p_2}+x_{v_1,2,p_1}+x_{v_1,2,p_2}+ \cdots +x_{v_1,t-1,p_1}+x_{v_1,t,p_2} = 1 \nonumber\\
+	      && x_{v_2,1,p_1}+x_{v_2,1,p_2}+x_{v_2,2,p_1}+x_{v_2,2,p_2}+ \cdots +x_{v_2,t-1,p_1}+x_{v_2,t,p_2} = 1 \nonumber\\
+	      && \quad \vdots\nonumber\\
+	      && x_{v_{n-1},1,p_1}+x_{v_{n-1},1,p_2}+x_{v_{n-1},2,p_1}+x_{v_{n-1},2,p_2}+ \cdots +x_{v_{n-1},t-1,p_1}+x_{v_{n-1},t,p_2} = 1 \nonumber\\
+	      && x_{v_n,1,p_1}+x_{v_n,1,p_2}+x_{v_n,2,p_1}+x_{v_n,2,p_2}+ \cdots +x_{v_n,t-1,p_1}+x_{v_n,t,p_2} = 1\nonumber
+	     \end{eqnarray}
+	     とすることができる．例えば $1$ 番目の式は，いずれかの設置チー
+	     ム $p \in \{p_1, p_2\}$ が，いずれかのレイヤ（$=$ 設置順番）
+	     $l \in \{1, \ldots, t\}$ で $v_1$ を訪問する（$=$ 止水板を設
+	     置する）ということを意味する．$n=4，t=2$ の場合の具体例を図
+	     \ref{fig:seiyaku2} に示す．
+	     %
+	     \begin{figure}[H]
+	      \centering
+	      \includegraphics[width=10cm,clip]{seiyaku2.pdf}
+	      \caption{制約条件 2 の模式図}
+	      \label{fig:seiyaku2}
+	     \end{figure}
+	     %
+%	     図 \ref{fig:seiyaku2} から 式 (\ref{eq:AllWaterstop}) は止水
+%	     板設置チームが全ての出入口にちょうど一度だけ止水板を設置する
+%	     制約であることが分かる．
+	     %
+ \item [制約条件 3] 各設置チームはそれぞれのレイヤで高々 $1$ つの節点
+	     $v$ に存在することができる \\
+	     %
+	     各設置チームは，出入口を移動しながら止水板を設置する．このと
+	     き，ある設置チームがそれぞれのレイヤにおいて止水板を設置でき
+	     るのは高々 $1$ 箇所のみである．制約条件 3 は式
+	     (\ref{eq:OneByOne}) のように定式化することができる．
+	     \begin{equation}
+	      \displaystyle\sum_{v \in V}x_{v,l,p}\leq 1 \quad (l \in L,p \in P)\label{eq:OneByOne}
+	     \end{equation}
+	     式 (\ref{eq:OneByOne}) で制約条件が定式化できていることを確
+	     認するため，$V := \{v_1, v_2 \}, L := \{0, 1, 2 \}, P :=
+	     \{p_1, p_2\}$ とし，$L, P$ について展開すると．
+	     \begin{eqnarray}
+	      x_{v_1,0,p_1}+x_{v_2,0,p_1} \leq 1\nonumber\\
+	      x_{v_1,1,p_1}+x_{v_2,1,p_1} \leq 1\nonumber\\
+	      x_{v_1,2,p_1}+x_{v_2,2,p_1} \leq 1 \label{eq:seiyaku3}\\
+	      x_{v_1,0,p_2}+x_{v_2,0,p_1} \leq 1\nonumber\\
+	      x_{v_1,1,p_2}+x_{v_2,1,p_2} \leq 1\nonumber\\
+	      x_{v_1,2,p_2}+x_{v_2,2,p_2} \leq 1\nonumber
+	     \end{eqnarray}
+	     とすることができる．式 (\ref{eq:seiyaku3}) において $l = 0,
+	     p = p_1$ の場合に考えられる実行可能解を図 \ref{fig:test} に
+	     示す．
+	     %
+	     \begin{figure}[H]
+	      \centering
+	      \includegraphics[height=5cm,width=15cm,clip]{seiyaku3.pdf}
+	      \caption{制約条件 3 の模式図}
+	      \label{fig:test}
+	     \end{figure}
+	     %
+	     図 \ref{fig:test} の黒丸は設置チーム $p_1$ が存在しているこ
+	     とを表している．いずれの場合も，設置チーム $p_1$ は $1$ つの
+	     レイヤ上で $2$ 箇所以上に存在することはないことが分かる．
+	     %
+ \item [制約条件 4] いずれかのレイヤでいずれかの設置チームが $1$ 度だけ節点
+	     $v$ に移動する \\
+	     %
+	     本研究では複数の止水板設置チームが存在する場合を考えている．
+	     このとき，複数の設置チームが同一の節点 $v$ について止水板を
+	     設置することがないようにしなくてはならない．そのためには，い
+	     ずれかの設置チームが $1$ 度だけ節点$v$ に移動するようにしな
+	     ければならない．この条件は式 (\ref{eq:SequentialInstall}) の
+	     ように表すことができる．
+	     \begin{equation}
+	      \displaystyle\sum_{(\bar{v},v)\in E,l \in L,p \in P,l \geq 1}y_{\bar{v},v,l-1,p}=1 \quad (v \in V)\label{eq:SequentialInstall}
+	     \end{equation}
+	     %
+ \item [制約条件 5] 枝と節点の関係性 1 \\
+	     %
+	     本節の冒頭で述べたように，$x_{v,l,p}$ は設置チーム $p$ がレ
+	     イヤ $l$ 上で節点 $v$ に存在するかどうかを表す変数，
+	     $y_{e,l,p}$ はレイヤ $l$ からレイヤ $(l + 1)$ に掛けて設置チー
+	     ム $p$ が枝 $e$を通るかどうかを表す変数である．
+	     
+	     本制約は節点と枝に関連性を持たせるための制約である．レイヤ
+	     $(l - 1)$ からレイヤ $l$ にかけて，止水板設置チーム $p \in
+	     P$ が節点 $v_1$ から $v_2$ に移動する場合を考える．
+	     
+	     移動し始める出入り口を $v_1$ として， $v_1$ に存在する時と存
+	     在しない時で止水板設置チームの場合分けを考える（図
+	     \ref{fig:seiyaku5}）．
+	     %
+	     \begin{figure}[H]
+	      \centering
+	      \includegraphics[width=15cm,clip]{seiyaku5.pdf}
+	      \caption{制約条件 5 }
+	      \label{fig:seiyaku5}
+	     \end{figure}
+	     $0\mathchar`-1$ 変数 $x_{v_1,l,p}$ と $y_{v_1,v_2,l-1,p}$ の
+	     組合せのうち可能なのは以下の通りである：
+	     \begin{itemize}
+	      \item 止水板設置チーム $p_1$ が $v_1$ に存在する時
+		    \begin{itemize}
+		     \item $x_{v_1,l,p}=1，y_{v_1,v_2,l-1,p}=0$ の場合
+		     \item $x_{v_1,l,p}=1，y_{v_1,v_2,l-1,p}=1$ の場合
+		    \end{itemize}
+	      \item 止水板設置チーム $p_1$ が $v_1$ に存在しない時
+		    \begin{itemize}
+		     \item $x_{v_1,l,p}=0，y_{v_1,v_2,l-1,p}=0$ の場合
+		    \end{itemize}
+	     \end{itemize}
+	     %
+	     これらの条件を満たすために式 (\ref{eq:UsingEdge1}) のように
+	     定式化を行う．
+	     %
+	     \begin{equation}
+	      x_{v_1,l-1,p}\geq y_{v_1,v_2,l-1,p}
+	       \quad ((v_1,v_2)\in E,l \in L,p \in P,l \geq 1)
+	       \label{eq:UsingEdge1}
+	     \end{equation}
+	     %
+ \item [制約条件 6] 枝と節点の関係性 2 \\
+	     %
+	     制約条件 5 では，移動開始する節点 $v_1$ について場合分けを行っ
+	     ていたのに対し，本制約では到着する節点 $v_2$ について場合分
+	     けを行う．$v_2$ に存在する時と存在しない時の場合分けを図
+	     \ref{fig:seiyaku6} で図示する．
+	     %
+	     \begin{figure}[H]
+	      \centering
+	      \includegraphics[width=15cm,clip]{seiyaku6.pdf}
+	      \caption{制約条件 6 }
+	      \label{fig:seiyaku6}
+	     \end{figure}
+	     %
+	     制約条件 $5$ 同様，$0\mathchar`-1$ 変数 $x_{v_2,l,p}$ と
+	     $y_{v_1,v_2,l-1,p}$ の組合せのうち可能なのは以下の通りであ
+	     る：
+	     %
+	     \begin{itemize}
+	      \item 止水板設置チーム $p_2$ が $v_2$ に存在する場合
+	      \begin{itemize}
+	       \item $x_{v_2,l,p}=1，y_{v_1,v_2,l-1,p}=0$ の場合
+	       \item $x_{v_2,l,p}=1，y_{v_1,v_2,l-1,p}=1$ の場合
+	      \end{itemize}
+	      \item 止水板設置チーム $p_2$ が $v_2$ に存在する場合
+	      \begin{itemize}
+	       \item $x_{v_2,l,p}=0，y_{v_1,v_2,l-1,p}=0$ の場合
+	      \end{itemize}
+	     \end{itemize}
+	     %
+	     これらの条件を満たすために式 (\ref{eq:UsingEdge2}) のように定式化を行う．
+	     \begin{equation}
+	      x_{v_2,l,p}\geq y_{v_1,v_2,l-1,p} \quad ((v_1,v_2)\in E,l \in L,p \in P,l \geq 1)\label{eq:UsingEdge2}
+	     \end{equation}
+	     %
+ \item [制約条件 7] 枝と節点の関係性 3 \\
+	     %
+	     制約条件 5 と制約条件 6 では， $x_{v1,l-1,p}，x_{v2,l,p}，
+	     y_{v1,v2,l-1,p}$ の 3 つの $0\mathchar`-1$ 変数が存在する．
+	     3 つの変数を場合分けすると 8 つ考えられるが，そのうち制約条
+	     件 5 と制約条件 6 を満たす場合分けは
+	     %
+	     \begin{itemize}
+	      \item $x_{v_1,l,p}=0，x_{v_2,l,p}=0，y_{v_1,v_2,l-1,p}=0$ の場合
+	      \item $x_{v_1,l,p}=0，x_{v_2,l,p}=1，y_{v_1,v_2,l-1,p}=0$ の場合
+	      \item $x_{v_1,l,p}=1，x_{v_2,l,p}=0，y_{v_1,v_2,l-1,p}=0$ の場合
+	      \item $x_{v_1,l,p}=1，x_{v_2,l,p}=1，y_{v_1,v_2,l-1,p}=1$ の場合
+	     \end{itemize}
+	     の 4 つである．これらの条件を満たすために式
+	     (\ref{eq:UsingEdge3}) のように定式化を行う．
+	     %
+	     \begin{equation}
+	      x_{v_1,l-1,p}+x_{v_2,l,p}-y_{v_1,v2_,l-1,p} \leq 1
+	       \quad ((v_1,v_2)\in E,l \in L,p \in P,l \leq 1)\label{eq:UsingEdge3}
+	     \end{equation}
+	     %
+ \item [制約条件 8] 出入口間の移動時間 \\
+	     %
+	     変数 $y_{v_1, v_2, l, p}$ を用いると，出入口間の移動時間
+	     $t_{l, p}$ は式 (\ref{eq:Installingtime}) のように書くことができる：
+	     %
+	     \begin{equation}
+	      t_{l,p}=\displaystyle\sum_{l_ \in L,(v_1,v_2)\in E,l <
+	     1}y_{v_1,v_2,l_,p}w_{v_1,v_2}/66.0+(l*u) \quad (l \in L,p
+	     \in P,l \geq 1)\label{eq:Installingtime}
+	     \end{equation}
+	     %
+	     ここで，枝の重み $w_{v_1, v_2}$ は各出入口間の移動距離を表し
+	     ている．ここでは，各設置チームが分速 $66.0$m で歩行すること
+	     を想定している．
+	     %
+	     なお，この値は次章の数値実験の中では変更されることがある．
+	     %
+ \item [制約条件 9] 流入開始するまでの時間\\
+	     %
+	     \begin{equation}
+	      \bar{t}_{l,p} = \displaystyle\sum_{v \in
+	       V}x_{v,l,p}(f_v-60.0)
+	       \quad (l \in L,p \in P,l \geq 1)\label{eq:IdealInstllingTime}
+	     \end{equation}
+	     %
+	     式 (\ref{eq:IdealInstllingTime}) では，設置チーム $p \in P$
+	     がレイヤ $l$ において止水板を設置する出入口に，雨水が流入開
+	     始する時間を求めている．ただし，降雨開始後 $60$ 分の時点を時
+	     刻 $0$（$=$ 止水板の設置開始時刻）と定めている．
+	     %
+	     岡崎豪雨の地下流入ハイドログラフ\cite{水工学論文集1}によると，
+	     降雨初期の時刻と地下街への流入時刻には約 60 分の差がある．こ
+	     れは雨が降り始めても，管内水位が上昇し始め，地下出入口の地盤
+	     高に達するまでに時間を要するためである．ここではこの時間を
+	     止水板の設置開始時刻と定めている．
+	     %
+	     なお，この値は次章の数値実験の中では変更されることがある．
+	     
+ \item [制約条件 10] 止水板設置完了時刻と流入開始時刻の差 \\
+	     %
+	     ここでは，設置チーム $p \in P$がレイヤ $l$ で止水板を設置す
+	     る出入口において，止水板設置完了時刻と流入開始時刻の差がどの
+	     程度あるかを求めている．これは次のように書くことができる．
+	     %
+	     \begin{equation}
+	      d_{l,p}\geq t_{l,p}-\bar{t}_{l,p}-
+	       M(1-  \sum_{v \in V}x_{v,l,p})
+	       \quad (l \in L,p \in P,l \geq 1))\label{eq:DelayTime}
+	     \end{equation}
+	     %
+	     式 (\ref{eq:DelayTime})では，レイヤ $l$ の時，設置チームが出
+	     入口 $v$ に設置しているかどうかで場合分けを行う．
+	     \begin{itemize}
+	      \item $x_{v,l,p}$ = $1$ となるような $v$ が存在しないとき：
+		    $d_{l,p} \geq t_{l,p} - \bar{t_{l,p}} - M$
+	      \begin{itemize}
+	       \item $M$ は十分大きな正の値であるため $t_{l,p}$，
+		     $\bar{t}_{l,p}$ がどんな値であろうと常に成り立つ．つ
+		     まり，事実上意味を持たない制約となる．
+	      \end{itemize}
+	      \item $x_{v,l,p}$ = $1$ となるような $v$ が存在するとき：
+		    $d_{l,p} \geq t_{l,p} - \bar{t}_{l,p}$
+	      \begin{itemize}
+	       \item （止水板設置チームの設置完了時刻）$-$（流入開始時
+		     刻）を表しており，この値が負であれば流入開始時刻に間
+		     に合っているので 0 ，値が正であれば流入開始時刻に間
+		     に合わなかった時間を算出する．
+	      \end{itemize}
+	     \end{itemize}
+\end{description}
+\subsubsection{目的関数}
+本項では研究の目的関数について説明する．本研究の目的関数は各出入口の設置完了時刻と流入開始時刻の差の合計が最小になる値を目的関数とする．\\
+\\
+\ minimize \quad $\displaystyle\sum_{l \in L,p \in P,l \geq L}d_{lp}$
+%\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{数値実験}
+
+本章では，本研究で作成した数理計画モデルと，梅田地下街の流入データを用い
+て様々な状況下での止水板の設置について行った実験内容と結果について述べる．
+なお，本研究では梅田地下街の出入口に関するデータが必要になるが，これは
+\cite{水工学論文集2, 水工学論文集1} で使用されたものと同じデータを用いた．
+
+\subsection{計算環境}
+
+本実験で用いた計算環境と使用したソルバを表 \ref{計算環境} に示す．
+%
+なお，本研究では，$24$ 時間（$= 86400$ 秒）経過しても計算が終わらなかった
+場合は，その時点で得られている最良の暫定解を最適解と解釈することとした．
+
+\begin{table}[H]
+  \begin{center}
+    \caption{計算環境}
+    \begin{tabular}{cc}\hline
+      OS       & Microsoft Windows 10 Pro\\
+      CPU      & Intel(R) Core(TM) i7-6950X CPU @ 3.00GHz 3.00GHz\\
+      メモリ   & 64.00GB\\
+      ソルバ   & Gurobi Optimizer\\\hline
+    \end{tabular}
+    \label{計算環境}
+  \end{center}
+\end{table}
+
+\subsection{実験 1}
+
+実験 1 で設定した条件は表 \ref{tb:ex1} のとおりである．
+
+\begin{table}[H]
+ \begin{center}
+  \caption{実験 1 で設定した条件}
+  \begin{tabular}{ll}
+   \hline
+   1 時間あたりの降雨量 & 60mm \\
+   排水用ポンプ & 機能停止 \\
+   雨水が流入する出入口の数 & 24 箇所 \\
+   止水板設置チーム数 & 6 チーム (a, b, c, d, e, f) \\
+   止水板設置チームの歩行速度 & 66 m/分 \cite{移動速度} \\
+   降雨開始から止水板設置開始までの時間 & 60 分 \\
+   止水板 1 箇所の設置に要する時間 & 3 分 \\
+   スタート地点のメッシュ番号 & 15728 \\ 
+   \hline
+  \end{tabular}
+  \label{tb:ex1}
+ \end{center}
+\end{table}
+
+表 \ref{tb:ex1} にあるように，この実験では雨水が流入する出入口が $24$ 箇
+所あるものと想定している．対象となる出入口を図 \ref{fig:umedamap} に示す．
+これは，関西大学・岡部史弥氏に計算によるもので，$1$ 時間あたりの降雨量が
+$60$ mm の時，排水用のポンプが稼働してなかったときに雨水が流入すると推定
+される地下街出入口である．本実験では，これらの出入口に対し，$6$ チームで
+止水板を設置することを想定する．
+
+止水板の設置は，降雨開始直後に始めるようなものではない．そこで本実験では，
+降雨開始から止水板設置開始までの時間を $60$ 分と想定し，計算を行った．
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{umedamap.png}
+\caption{梅田地下街 流入箇所 }
+\label{fig:umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 1 止水板設置チームの設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e &f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728  \\
+         1 & 6679  & 4626  & 8236  & 32746 & 6205  & 7671   \\
+         2 & 23742 & 8211  & 18089 & 7823  & 6689  & 15728  \\
+         3 & 28619 & 8643  & 24352 &   $-$   & 1813  & 14140  \\
+         4 & 23295 & 23411 &   $-$   &   $-$   & 1592  & 11087  \\
+         5 &   $-$   &   $-$   &   $-$   &   $-$   & 8169  & 24027  \\
+         6 &   $-$   &   $-$   &   $-$   &   $-$   & 10635 &   $-$    \\\hline
+    \end{tabular}
+    \label{fig:実験1_1}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken1_settizyunzyo_map.pdf}
+\caption{梅田地下街 止水板設置順序}
+\label{fig:zikkenn1_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 1 の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        6679         &     12.76  \\
+         1     &          d       &        32746        &     25.45  \\
+         1     &          e       &        6205         &     10.67  \\
+         1     &          f       &        7671         &     13.48 \\\hline
+    \end{tabular}
+    \label{fig:実験1_2}
+\end{center}
+\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 1 の結果}
+ \begin{tabular}{lrrrrr}\hline
+      移動回数   & 制約数 &変数の数 &計算時間(s) & GAP(\%) & 目的関数（分）\\\hline
+        6      & 17484  &  33984   &  20875 & 0.03 & 31.36 \\\hline
+    \end{tabular}
+    \label{fig:実験1_3}
+\end{center}
+\end{table}
+
+実験 1 の結果を表 \ref{fig:実験1_1}, \ref{fig:実験1_2}, \ref{fig:実験
+1_3}，図 \ref{fig:zikkenn1_umedamap} に示す．表 \ref{fig:実験1_1} にある
+ように，$24$ 箇所の出入口全てに止水板が設置されていることがわかる．また
+各チームがどの出入口間を移動したかを示しているのが図
+\ref{fig:zikkenn1_umedamap} である．
+%
+これを見ると，比較的近い出入口を多く訪問している設置チームや，遠い距離を
+移動しているため少数の出入口のみを設置しているチームがあることがわかる．
+
+表 \ref{fig:実験1_2} に，止水板の設置が間に合わず，雨水が流入してしまう
+出入口の番号を示している．いずれの場合も，1 回目の移動で設置をしようとし
+たにもかかわらず設置が間に合っていないことから，これ以上の改善はできない
+ことがわかる．
+
+表 \ref{fig:実験1_3} は最適化計算に関する情報である．この場合は，雨水流入時
+間の合計が $31$ 分程度となる最適解を求めることができた．
+
+\subsection{実験 2}
+
+実験 2 では，実験 1 の設定（表 \ref{tb:ex1}）のうち，止水板設置チームの数
+を $4, 5, 7$ に変えて実験を行った．
+
+以下，各チーム数の下での実験結果を表 \ref{fig:実験2_2_4team} から表
+\ref{fig:実験2_3_7team}，図\ref{fig:zikkenn2_team4_umedamap} から図
+\ref{fig:zikkenn2_team7_umedamap} に示す．
+
+\begin{itemize}
+\item 止水板設置チーム4組の場合
+\end{itemize}
+%\begin{table}[H]
+%\begin{center}
+%\caption{実験 2 設置チーム4チームの結果}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 11656  &  22672   &  86402 \\\hline
+%    \end{tabular}
+%    \label{fig:実験2_1_4team}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 4 組の場合の設置順序}
+ \begin{tabular}{l|cccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d\\\hline
+         0 & 15728 & 15728 & 15728 & 15728   \\
+         1 & 7671  & 6679  & 15728 & 8236    \\
+         2 & 4626  & 23742 & 11087 & 6205    \\
+         3 & 8211  & 24352 & 14140 & 1592     \\
+         4 & 8643  & 28619 & 18089 & 1813    \\
+         5 & 8169  & 7823  & 32746 & 6686     \\
+         6 & 10635 & 23295 & 24027 & 23411    \\\hline
+    \end{tabular}
+    \label{fig:実験2_2_4team}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikkenn2_settizyunzyo_team4_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（4 チームの場合）}
+\label{fig:zikkenn2_team4_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 4 組の場合の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        7671         &     5.48  \\
+         2     &          a       &        4626         &     3.09  \\
+         1     &          b       &        6679         &     4.76  \\
+         3     &          b       &        24352        &     0.18 \\
+         5     &          b       &        7823         &     0.15 \\
+         4     &          c       &        18089        &     0.42 \\
+         5     &          c       &        32746        &     28.55 \\
+         2     &          d       &        6205         &     13.58 \\
+         6     &          d       &        23411        &     0.85 \\\hline
+    \end{tabular}
+    \label{fig:実験2_3_4team}
+\end{center}
+\end{table}
+\begin{itemize}
+\item 止水板設置チーム 5組の場合
+\end{itemize}
+%\begin{table}[H]
+%\begin{center}
+%\caption{実験 2 設置チーム5チームの結果}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 14570  &  28328   &  59610 \\\hline
+%    \end{tabular}
+%    \label{fig:実験2_1_5team}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 5 組の場合の設置順序}
+ \begin{tabular}{l|ccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728  \\
+         1 & 6205  & 32746 & 15728 & 6679  & 7671  \\
+         2 & 6686  & 7823  & 8236  & 18089 & 4626 \\
+         3 & 1813  &   $-$   & 23742 & 23411 & 8211  \\
+         4 & 1592  &   $-$   & 24352 & 24027 & 8643 \\
+         5 & 14140 &   $-$   & 28619 & 23295 & 8169 \\
+         6 & 11087 &   $-$   &   $-$   &   $-$   & 10635   \\\hline
+    \end{tabular}
+    \label{fig:実験2_2_5team}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikkenn2_settizyunzyo_team5_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（5 チームの場合）}
+\label{fig:zikkenn2_team5_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 5 組の場合の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        6205         &     9.67  \\
+         1     &          b       &        32746        &     11.45  \\
+         4     &          c       &        24352        &     0.09 \\
+         1     &          d       &        6679         &     4.76  \\
+         1     &          e       &        7671         &     5.48\\
+         2     &          e       &        4626         &     3.09  \\\hline
+    \end{tabular}
+    \label{fig:実験2_3_5team}
+\end{center}
+\end{table}
+\begin{itemize}
+\item 止水板設置チーム 7 組の場合
+\end{itemize}
+%\begin{table}[H]
+%\begin{center}
+%\caption{実験 2 設置チーム 7 組の結果}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 4921  &  28959   &  1446 \\\hline
+%    \end{tabular}
+%    \label{fig:実験2_1_7team}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 7 組の場合の設置順序}
+ \begin{tabular}{l|ccccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f & g\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 7671  & 4626  & 8236  & 32746 & 6679  & 11087 & 6205 \\
+         2 & 8211  & 23411 & 18089 & 24027 & 1813  & 24352 & 15728\\
+         3 & 7823  &   $-$   & 28619 &   $-$   & 1592  & 23742 & 8169  \\
+         4 & 6686  &   $-$   &   $-$   &   $-$   & 14140 &   $-$   & 8643 \\
+         5 & 10635 &   $-$   &   $-$   &   $-$   & 23295 &   $-$   &   $-$  \\
+         6 &   $-$   &   $-$   &   $-$   &   $-$   &   $-$   &   $-$   &   $-$\\\hline
+    \end{tabular}
+    \label{fig:実験2_2_7team}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikkenn2_settizyunzyo_team7_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（7 チームの場合）}
+\label{fig:zikkenn2_team7_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 止水板設置チーム 7 組の場合の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        7671         &     5.48  \\
+         1     &          d       &        32746        &     11.45  \\
+         1     &          e       &        6679         &     4.76  \\
+         1     &          g       &        6205         &     9.67\\\hline
+    \end{tabular}
+    \label{fig:実験2_3_7team}
+\end{center}
+\end{table}
+
+\begin{itemize}
+\item 実験 2 の結果のまとめ
+\end{itemize}
+
+実験 $2$ の結果を表 \ref{fig:実験2_1_7team}，図
+\ref{fig:60_without_team_gurahu} にまとめる．
+
+\begin{table}[H]
+\begin{center}
+\caption{実験 2 結果　まとめ}
+ \begin{tabular}{lrrrrr}\hline
+      止水板設置チーム   & 制約数 & 変数の数 &計算時間(s) & GAP(\%) &目的関数（分）\\\hline
+         4     & 11656  &  22672   &  86402 & 9.14 & 57.06\\
+         5     & 14570  &  28328   &  59610 & 0.02 & 34.55\\
+         6     & 17484  &  33984   &  20875 & 0.03 & 31.36\\
+         7     & 16352  &  31723   &  1446  & 4.73 & 31.36\\\hline
+\end{tabular}
+    \label{fig:実験2_1_7team}
+\end{center}
+\end{table}
+%実験 2 の結果の目的関数の値をまとめると図 (\ref{fig:60_without_team_gurahu}) に示す．
+%\begin{table}[H]
+%\begin{center}
+% \begin{tabular}{|l|r|}\hline
+%       止水板設置チームの数  &　目的関数（分）  \\\hline
+%         4     &       57.06…  \\
+%         5     &   　　34.54 …  \\
+%         6     &       31.36…  \\
+%         7     &       31.36…\\\hline
+%    \end{tabular}
+%\end{center}
+%\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{60_without_team_gurahu.pdf}
+\caption{実験 2 の結果比較 }
+\label{fig:60_without_team_gurahu}
+\end{figure}
+
+図 \ref{fig:60_without_team_gurahu} より，止水板設置チームの数が増える度
+に流入開始時刻に間に合わなかった時間の合計が短くなっていることが分かる．
+%
+ただし，設置チームの数を 6 から 7 に増やしても流入開始時刻に間に合わなかっ
+た時間の合計に変化はないことが分かった．このとき，それぞれのチーム数の最
+適解で流入した出入口を比較すると，どちらも同じ出入口（メッシュ番号 6679
+，6205，7671，3274）から流入していることが分かった．
+%
+この 4 箇所にはいずれも移動回数が 1 の時に流入してきているため，設置チー
+ムが真っ先に向かっても間に合わないということである．このことから設置チー
+ムの数が増える度に流入開始時刻に間に合わなかった時間の合計は短くなるが，
+その効果には上限があることが推定される．
+
+\subsection{実験 3}
+
+実験 3 では，実験 1 の設定（表 \ref{tb:ex1}）のうち，降雨開始から止水板を
+設置し始めるまでの時間を $50, 70$ 分に変えて実験を行った．
+
+以下，各設定での実験結果を表 \ref{fig:実験3_2_settikaisi50} から表
+\ref{fig:実験3_3_settikaisi70}，図
+\ref{fig:zikkenn3_settikaisi50_umedamap},
+\ref{fig:zikkenn3_settikaisi70_umedamap} に示す．
+
+\begin{itemize}
+\item 降雨開始から 50 分後に設置し始める場合
+\end{itemize}
+%\begin{table}[H]\
+%\begin{center}
+%\caption{実験 3}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 136044  &  33984   &  306 \\\hline
+%    \end{tabular}
+%    \label{fig:実験3_1_settikaisi50}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 3 降雨開始から 50 分に設置開始の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 6679  & 14140 & 32746 & 6205  & 18089 & 15728 \\
+         2 & 7671  & 8169  & 23295 & 4626  & 28619 & 8236 \\
+         3 & 6686  & 8643  & 7823  &   $-$   & 24352 & 23411 \\
+         4 & 11087 & 1592  &   $-$   &   $-$   &   $-$   & 23742  \\
+         5 & 10635 & 1813  &   $-$   &   $-$   &   $-$   &   $-$   \\
+         6 & 24027 & 8211  &   $-$   &   $-$   &   $-$   &   $-$   \\\hline
+    \end{tabular}
+    \label{fig:実験3_2_settikaisi50}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken3_settizyunzyo_settikaisi50_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（降雨開始から 50 分後に設置を開始す
+ る場合）}
+\label{fig:zikkenn3_settikaisi50_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 3 降雨開始から 50 分 の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          c       &        32746         &     1.45  \\\hline
+    \end{tabular}
+    \label{fig:実験3_3_settikaisi50}
+\end{center}
+\end{table}
+\begin{itemize}
+\item 降雨開始から 70 分後に設置し始める場合
+\end{itemize}
+%\begin{table}[H]\
+%\begin{center}
+%\caption{実験 3}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 17484  & 33984   &  86400 \\\hline
+%    \end{tabular}
+%    \label{fig:実験3_1_settikaisi70}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 3 降雨開始から 70 分に設置開始の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 6205  & 15728 & 23742 & 6679  & 8236  & 7671 \\
+         2 & 1592  & 18089 & 24352 & 8211  & 8169  & 4626 \\
+         3 & 1813  & 28619 & 32746 & 23411 & 8643  & 6686 \\
+         4 & 10635 &   $-$   & 24027 &   $-$   & 14140 &   $-$  \\
+         5 & 7823  &   $-$   & 23295 &   $-$   & 11087 &   $-$   \\\hline
+    \end{tabular}
+    \label{fig:実験3_2_settikaisi70}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken3_settizyunzyo_settikaisi70_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（降雨開始から 70 分後に設置を開始す
+ る場合）}
+\label{fig:zikkenn3_settikaisi70_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 3 降雨開始から 70 分 の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分）\\\hline
+         1     &          a       &        6205          &     19.67  \\
+         2     &          a       &        1592          &     2.30  \\
+         3     &          a       &        1813          &     5.00  \\
+         3     &          c       &        32746         &     28.97  \\
+         1     &          d       &        6679          &     14.76  \\
+         2     &          d       &        8211          &     1.73  \\
+         3     &          d       &        23411         &     2.03  \\
+         1     &          e       &        8236          &     5.58  \\
+         1     &          f       &        7671          &     15.48  \\
+         2     &          f       &        4626          &     13.09  \\\hline
+\end{tabular}
+    \label{fig:実験3_3_settikaisi70}
+\end{center}
+\end{table}
+\begin{table}[H]
+\begin{center}
+
+\caption{実験 3 結果　まとめ}
+
+
+
+ \begin{tabular}{lrrrrr}\hline
+   止水板設置開始（分後) & 制約数 & 変数の数 &計算時間(s) & GAP(\%) & 目的関数（分）\\\hline
+         50     & 17484  &  33984   &  306   & 29.2 & 1.45\\
+         60     & 17484  &  33984   &  20875 & 0.03 & 31.36\\
+         70     & 16352  &  31723   &  86400 & 22.9 & 110.48\\\hline
+    \end{tabular}
+    \label{fig:実験2_1_7team_}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{60_without_settikaisi_gurahu.pdf}
+\caption{実験 3 の結果の比較 }
+\label{fig:60_without_settikaisi_gurahu}
+\end{figure}
+
+図 \ref{fig:60_without_settikaisi_gurahu} より，降雨開始から止水板を設置
+し始めるまでの時間が長いほど地下街に流入する時間が増える．また，降雨開始
+から止水板を設置するまでの時間が遅くなると地下街に流入する時間が大幅に増
+える．
+
+\subsection{実験 4}
+
+実験 4 では，実験 1 の設定（表 \ref{tb:ex1}）のうち，設置チームの移動速度
+を $50$m/分，$60$m/分，$72$m/分に変えて実験を行った．これは，混雑の度合
+いによって設置チームの移動速度が遅くなったり，あるいは地下街が比較的空い
+ている状況であれば駆け足での移動が可能になることを想定している．
+
+以下，各移動速度の下での実験結果を表 \ref{fig:実験4_2_idousokudo50} から
+表 \ref{fig:実験4_3_idousokudo72}，図
+\ref{fig:zikkenn4_idouosokudo50_umedamap} から図
+\ref{fig:zikkenn4_idouosokudo72_umedamap} に示す．
+
+\begin{itemize}
+\item 止水板設置チームの移動速度が 50 m/分の場合
+\end{itemize}
+%\begin{table}[H]\
+%\begin{center}
+%\caption{実験 4}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 &計算時間(s)\\\hline
+%         6     & 17484  &  33984   &  86400 \\\hline
+%    \end{tabular}
+%    \label{fig:実験4_1_idousokudo50}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 50 m/分の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 6205  & 8236  & 18089 & 6679  & 7671  & 15728 \\
+         2 & 1813  & 1592  & 23742 & 4626  & 8211  & 14140 \\
+         3 & 23411 & 6686  & 24352 & 10635 & 8643  & 32746 \\
+         4 &   $-$   & 11087 & 28619 & 7823  & 8169  & 23295 \\
+         5 &   $-$   &   $-$   & 24027 &   $-$   &   $-$   &   $-$   \\\hline
+    \end{tabular}
+    \label{fig:実験4_2_idousokudo50}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken4_settizyunzyo_idousokudo50_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（移動速度 50m/分の場合）}
+\label{fig:zikkenn4_idouosokudo50_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 50 m/分の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        6205          &     12.12  \\
+         1     &          d       &        6679          &     7.88  \\
+         2     &          d       &        4626          &     6.72  \\
+         1     &          e       &        7671          &     8.84  \\
+         3     &          f       &        32746         &     25.04  \\\hline
+\end{tabular}
+    \label{fig:実験4_3_idousokudo50}
+\end{center}
+\end{table}
+\begin{itemize}
+\item 止水板設置チームの移動速度 60 m/分の場合
+\end{itemize}
+%\begin{table}[H]\
+%\begin{center}
+%\caption{実験 4}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 & 計算時間(s)\\\hline
+%         6     & 14016  &  27198   &  86400\\\hline
+%    \end{tabular}
+%    \label{fig:実験4_1_idousokudo60}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 60m/分の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 32746 & 7671  & 6205  & 24352 & 6679  & 4626 \\
+         2 & 24027 & 1592  & 8236  & 23742 & 1813  & 7823 \\
+         3 & 23295 & 8169  & 15728 & 18089 & 14140 & 8211 \\
+         4 &  $-$  & 8643  & 23411 & 11087 &  $-$  & 6686  \\
+         5 &  $-$  &   $-$  & $-$  &   $-$   & $-$ &   28619   \\\hline
+    \end{tabular}
+    \label{fig:実験4_2_idousokudo60}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken4_settizyunzyo_idousokudo60_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（移動速度 60m/分の場合）}
+\label{fig:zikkenn4_idouosokudo60_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 60m/分の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        32746          &     13.70  \\
+         1     &          b       &        7671          &     6.53  \\
+         2     &          c       &        8236         &     2.63  \\
+         1     &          c       &        6205          &     10.43  \\
+         1     &          e       &        6679          &     5.73  \\
+         1     &          f       &        4626         &     0.10  \\\hline
+\end{tabular}
+    \label{fig:実験4_3_idousokudo60}
+\end{center}
+\end{table}
+\begin{itemize}
+\item 止水板設置チームの移動速度 72 m/分の場合
+\end{itemize}
+%\begin{table}[H]\
+%\begin{center}
+%\caption{実験 4}
+% \begin{tabular}{cccc}\hline
+%      移動回数   & 制約数 & 変数の数 & 計算時間(s)\\\hline
+%         6     & 14016  &  27198   &  615 \\\hline
+%    \end{tabular}
+%    \label{fig:実験4_1_idousokudo72}
+%\end{center}
+%\end{table}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 72m/分の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 4626  & 6679  & 6205  & 7671  & 32746 & 15728 \\
+         2 & 1592  & 23742 & 6686  & 8211  & 24027 & 8236 \\
+         3 & 14140 & 24352 & 1813  & 8169  &   $-$   & 18089\\
+         4 & 11087 &   $-$   & 10635 & 8643  &   $-$   & 28619 \\
+         5 &   $-$   &   $-$   & 7823  & 23411 &   $-$   & 23295 \\\hline
+    \end{tabular}
+    \label{fig:実験4_2_idousokudo72}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken4_settizyunzyo_idousokudo72_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（移動速度 72m/分の場合）}
+\label{fig:zikkenn4_idouosokudo72_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 移動速度 72m/分の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          b       &        6679          &     3.94  \\
+         1     &          c       &        6205          &     9.03  \\
+         1     &          d       &        7671          &     4.61  \\
+         1     &          e       &        3274          &     9.58  \\\hline
+\end{tabular}
+    \label{fig:実験4_3_idousokudo72}
+\end{center}
+\end{table}
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=15cm,clip]{60_without_settikaisi_gurahu.pdf}
+%\caption{実験 4 の結果の比較 }
+%\label{fig:60_without_settikaisi_gurahu}
+%\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 4 結果　まとめ}
+ \begin{tabular}{lrrrrr}\hline
+      移動速度(m/s)  & 制約数 & 変数の数 &計算時間(s) & GAP(\%) & 目的関数（分）\\\hline
+         50     & 17484  &  33984   &  86400 & 17.5 & 60.60\\
+         60     & 14016  &  27198   &  86400 & 6.73 & 39.13\\
+         66     & 17484  &  33984   &  20875 & 0.03 & 31.36\\
+         72     & 14016  &  27198   &  615   & 4.53 & 27.17\\\hline
+    \end{tabular}
+    \label{fig:実験4}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{60_without_idousokudo_gurahu.pdf}
+\caption{実験 4 の結果比較 }
+\label{fig:60_without_idousokudo_gurahu}
+\end{figure}
+
+図 \ref{fig:60_without_idousokudo_gurahu} より，移動速度が大きくなるほど
+地下街に流入する時間は短くなる．ただし，移動速度が大きくなるほどグラフの傾
+きは小さくなっており，移動速度の向上が雨水流入時間の現象に及ぼす効果が小
+さくなっていることがわかる．
+
+\subsection{実験 5}
+
+実験 5 では，実験 1 の設定（表 \ref{tb:ex1}）のうち，止水板設置に要する
+う時間を $5$ 分に変えて実験を行った．
+
+以下，実験結果を表 \ref{fig:実験5_1}, \ref{fig:実験5_2}，図
+\ref{fig:zikkenn5_settizikan5_umedamap} に示す．
+
+\begin{itemize}
+\item 止水板設置に要する時間が 5 分の場合
+\end{itemize}
+\begin{table}[H]
+\begin{center}
+\caption{実験 5 止水板設置に要する時間 5 分の設置順序}
+ \begin{tabular}{l|cccccc}\hline
+       \backslashbox{移動回数}{チーム名} & a & b & c & d & e & f\\\hline
+         0 & 15728 & 15728 & 15728 & 15728 & 15728 & 15728 \\
+         1 & 6250  & 32746 & 4626  & 8236  & 18089 & 6679 \\
+         2 & 1592  & 24027 & 8211  & 14140  & 23742 & 7671 \\
+         3 & 1813  & 23295 & 23411 & 15728  & 24352  & 8643\\
+         4 & 6686  &   $-$ &   $-$ & 11087  &  28619 & 8169 \\
+         5 & 10635 &   $-$ &  $-$  & 7823  &   $-$   &  $-$ \\\hline
+    \end{tabular}
+    \label{fig:実験5_1}
+\end{center}
+\end{table}
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm,clip]{zikken5_settizyunzyo_settizikan5_map.pdf}
+\caption{梅田地下街 止水板最適設置順序（止水板設置時間 5 分の場合）}
+\label{fig:zikkenn5_settizikan5_umedamap}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{実験 5 止水板設置に要する時間 5 分の流入箇所}
+ \begin{tabular}{lrrr}\hline
+       移動回数  & 止水板設置チーム &  出入口メッシュ番号 & 流入時間（分） \\\hline
+         1     &          a       &        6250          &     11.67  \\
+         3     &          a       &        1813          &     1.00  \\
+         1     &          b       &        32746         &     13.45  \\
+         3     &          e       &        24352         &     0.18  \\
+         1     &          f       &        6679          &     6.76  \\
+         2     &          f       &        7671          &     13.39  \\\hline
+\end{tabular}
+    \label{fig:実験5_2}
+\end{center}
+\end{table}
+\begin{table}[H]\
+\begin{center}
+\caption{実験 5 結果　まとめ}
+ \begin{tabular}{lrrrrr}\hline
+      設置時間 & 制約数 & 変数の数 & 計算時間(s)& GAP(\%) & 目的関数（分）\\\hline
+           3 & 17484  &  33984   &  20875 & 0.03 & 31.36\\
+           5 & 17484  &  33984   &  36863 & 0.00  & 47.45\\\hline
+    \end{tabular}
+    \label{fig:実験5_3_settizikan5}
+\end{center}
+\end{table}
+
+表 \ref{fig:実験5_3_settizikan5} より，止水板設置に要する時間が増えると地
+下街に流入する時間も増える．また，図
+\ref{fig:zikkenn5_settizikan5_umedamap} と図\ref{fig:zikkenn1_umedamap}
+より，設置チームの設置順序も設置時間の違いによって異なる動きをする．
+
+\subsection{まとめ}
+
+本節では，実験 1 から実験 5 まで行ってきた数値実験についてまとめる．
+
+\begin{itemize}
+\item 止水板設置チームの数が増えるほど地下街に流入する時間は短くなるが，ある一定の数まで増えると地下街に流入する時間は変化なしになる
+\item 降雨開始から止水板を設置し始めるまでの時間が長いと地下街に流入する時間が大幅に増える
+\item 移動速度が大きくなると地下街に流入する時間は小さくなるが，徐々に流入時間の変化が小さくなる
+\end{itemize}
+
+実験 1 から実験 5 まで数値実験を行ったが，目的関数の値が最小であるケースは実験 2 の「降雨開始から 50 分後に止水板を設置する」であり，その時の最適な設置順序は図 \ref{fig:実験3_2_settikaisi50} である．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{おわりに}
+本研究では，各出入口の流入開始時刻を考慮した止水板の設置順序を最適化問題として定式化しそれを最適化ソルバで解くことで，最適な止水板設置順序を算出することができた．また，止水板設置条件を変えることで条件の比較を行うことができた．
+
+%本研究で行った数値実験は 1 時間当たりの降雨量 60mm の場合のみである．今回，降雨量 60mm 以外にも 120mm,180mm の場合のデータでも数値実験を行うつもりであった．しかし，120mm,180mm の場合は流入した出入口箇所が多いため計算に 1 週間以上時間がかかった．
+今後の課題としては，降雨条件を変化させて検証を行う必要性がある．しかし，1 時間あたりの降雨量を増やした場合，流入する出入口のデータが増えるため計算時間が大幅に長くなる可能性がある．これをいかに抑えるか検討しなくてはならない．具体的には定式化などの見直しが必要であると考えられる．また，本研究ではいくつかある止水板の設置条件のうち 1 つだけを変更して計算し，結果の違いを比較しているが，複数の条件を変えた時の最適な止水板設置順序がどのように変わるのかを検討することができなかった．今後十分な実験が必要であると考えられる．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section*{謝辞}
+本研究を進めるに当たり，ご指導いただいた檀寛成准教授に深く感謝致します．
+
+また，日常の議論を通じて多くの知識や示唆を頂いたシステム最適化研究室の皆様へ心から感謝の気持ちと御礼を申し上げて，謝辞にかえさせていただきます．
+\begin{flushright}
+平成 $29$ 年 $2$ 月 $9$ 日 
+\end{flushright}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 参考文献
+% 本文で参照する際は\citeを使用
+\newpage
+\begin{thebibliography}{99}
+\bibitem{福岡水害_朝日新聞}朝日新聞，1999 年 8 月 27 日朝刊，地下店舗，低い水防意識 福岡水害実態調査 ($1999$).
+\bibitem{数理計画入門}福島雅夫，新版 数理計画入門，朝倉書店（$2011$）．
+\bibitem{GLPK}GLPK - GNU Project - Free Software Foundation (FSF), \par \verb|https://www.gnu.org/software/glpk/| ($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{水工学論文集2}井上知美，川中龍児，石垣泰輔，尾崎平，戸田圭一，内水氾濫による大規模地下街の浸水過程と避難の安全性に関する検討，水工学論文集 ,$55$,$s973-s978$ ($2011$).
+\bibitem{岡崎豪雨}一般社団法人，中部地域づくり協会，平成 $20$ 年 $8$ 月末豪雨\verb|http://www.ckk.or.jp/saigai/2012/208-11/208.html|($2017$ 年 $2$ 月 $9$ 日確認) 
+\bibitem{気象庁}国土交通省，気象庁・アメダスで見た短時間強雨発生回数の長期変化について\verb|http://www.jma.go.jp/jma/kishou/info/heavyraintrend.html| ($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{福岡水害_国土交通省}国土交通省，大都市の無防備な地下空間を襲った集中豪雨\par \verb|https://www.mlit.go.jp/river/pamphlet_jirei/bousai/saigai/1999/html/|\par \verb|sete001.html| ($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{水工学論文集1}森兼政行，石垣泰輔，尾崎平，戸田圭一，大規模地下空間を有する都市域における地下空間への内水氾濫水の流入特性とその対策，水工学論文集 ,$55$,$s967-s972$ ($2011$)．
+\bibitem{移動速度}内閣府 (防災担当),平成 20 年 4 月 2 日，帰宅行動シミュレーション結果について (概要) :\par \verb|http://www.bousai.go.jp/kaigirep/chuobou/senmon/shutohinan/pdf/shiryo_1.pdf| ($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{時空間ネットワーク}中村幸史，通勤電車運行スケジュールにおける遅延計算モデルの構築，中央大学大学院理工学研究科情報工学専攻 $2003$ 年度 修士論文($2004$)． 
+\bibitem{大阪ゲリラ豪雨}日本経済新聞，2013 年 8 月 26 日朝刊，大阪市，10 分間で 27.5 ミリ($2013$)．
+\bibitem{大阪管区気象台}大阪管区気象台，平成 25 年 8 月 25 日の大雨について(大阪府の気象衛星)\par \verb|http://www.jma-net.go.jp/osaka/kikou/saigai/pdf/sokuhou/20130828.pdf| \par ($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{武田さん卒論}武田侑也，大規模地下空間における内水氾濫による浸水対策の検討，関西大学環境都市工学部 $2015$ 年度卒業論文 ($2016$).
+\bibitem{東海豪雨}平成 $12$ 年 $9$ 月の東海豪雨災害について\verb|http://www.giroj.or.jp/disclosure/risk/risk58-1.pdf|($2017$ 年 $2$ 月 $6$ 日確認).
+\bibitem{東京海上日動リスクコンサルティング株式会社}東京海上日動リスクコンサルティング株式会社，集中豪雨の増加傾向と水害への対応\par \verb|http://www.tokiorisk.co.jp/risk_info/up\_file/201306171.pdf| ($2017$ 年 $2$ 月 $6$ 日確認).
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+% 付録になると章番号がアルファベットに変わります．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%付録%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{本研究で作成したモデルファイル}
+\begin{verbatim}
+set V;          # Vertex
+set E dimen 2;  # Edge
+set L;          # Leyer {0, 1, ...}
+set P;          # Team
+
+param f{V};     #
+param w{E};     # Weight of edge
+param s;        # Start
+param u;        # Installing time for one waterstop
+param M;        # Big-M
+
+var x{V, L, P}, binary;  #
+var y{E, L, P}, binary;  #
+var t{L, P};             # Time
+var t_{L, P};            # Ideal Time
+var d{L, P}, >= 0.0;     # Delay
+
+##################################################
+
+minimize Objective:
+  sum {l in L, p in P: l >= 1} d[l, p];
+
+subject to InitialPosition {p in P}:
+  x[s, 0, p] == 1;
+
+subject to AllWaterstop {v in V}:
+  sum {l in L, p in P: l >= 1} x[v, l, p] == 1;
+
+subject to OneByOne {l in L, p in P}:
+  sum {v in V} x[v, l, p] <= 1;
+
+subject to SequentialInstall {v in V}:
+  sum {(v_, v) in E, l in L, p in P: l >= 1} y[v_, v, l - 1, p] == 1;
+
+subject to UsingEdge_1 {(v1, v2) in E, l in L, p in P: l >= 1}:
+  x[v1, l - 1, p] >= y[v1, v2, l - 1, p];
+
+subject to UsingEdge_2 {(v1, v2) in E, l in L, p in P: l >= 1}:
+  x[v2, l, p] >= y[v1, v2, l - 1, p];
+
+subject to UsingEdge_3 {(v1, v2) in E, l in L, p in P: l >= 1}:
+  x[v1, l - 1, p] + x[v2, l, p] - y[v1, v2, l - 1, p] <= 1;
+
+subject to InstallingTime {l in L, p in P: l >= 1}:
+  t[l, p] == sum {l_ in L, (v1, v2) in E: l_ < l}
+          y[v1, v2, l_, p] * w[v1, v2] / 66.0 + l * u;
+
+subject to IdealInstallingTime {l in L, p in P: l >= 1}:
+  t_[l, p] == sum {v in V} (x[v, l, p] * (f[v] - 60.0));
+
+subject to DelayTime {l in L, p in P: l >= 1}:
+  d[l, p] >= t[l, p] - t_[l, p] - (1 - sum {v in V} x[v, l, p]) * M;
+
+##### End of file #####
+
+\end{verbatim}
+%\subsection{節}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%% End of file %%%%%

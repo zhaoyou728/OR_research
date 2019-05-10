@@ -1,0 +1,204 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% [title]
+%                                    Hiroshige DAN
+%                                      yyyy/mm/dd
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{jarticle}
+\usepackage{latexsym}
+%\usepackage[fleqn]{amsmath}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\setlength{\textheight}{43\baselineskip}
+\setlength{\textwidth}{47zw}
+\setlength{\oddsidemargin}{10pt}
+\setlength{\evensidemargin}{10pt}
+\setlength{\topmargin}{0pt}
+
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{algorithm}{Algorithm}[section]
+\newtheorem{motivation}{Motivation}[section]
+\newtheorem{assumption}{Assumption}[section]
+
+\def\smskip{\par\vskip 5 pt}
+\def\QED{\hfill $\Box$ \smskip}
+\newcommand{\bd}[1]{\mbox{\boldmath $#1$}}
+
+\makeatletter
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\@addtoreset{equation}{section}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{最適化モデル}
+
+本節では，本研究で提案する最適化モデルについて説明する．
+
+\subsection{モデル中で利用する記号}
+
+ここでは，提案する最適化モデル中で利用する記号について整理する．
+
+\begin{itemize}
+\item 集合・添字
+      \begin{itemize}
+    \item $t \in T$: 時刻を表す添字 $t$ とその集合 $T$
+    \item $s \in S$: シナリオを表す添字 $s$ とその集合 $S$
+      \end{itemize}
+\item パラメータ
+      \begin{itemize}
+    \item $\tilde{s}_{ts}$: 時刻 $t$ におけるシナリオ $s$ に対応する，
+          時刻 $t - 1$ におけるシナリオ番号（@@@ 図）
+    \item $r_t$: 時刻 $t$ における売電価格
+    \item $P_{ts}$: 時刻 $t$ におけるシナリオ $s$ の発生確率
+    \item $w_{ts}$: 時刻 $t$ におけるシナリオ $s$ での発電量
+    \item $CA$: 蓄電池容量
+    \item $\tilde{P}_U, \tilde{P}_L$: 風力発電設備の運用が破綻する確
+          率の許容値．$\tilde{P}_U$ は，蓄電量が，蓄電池容量の
+          $70$\% を上回るシナリオの発生確率の許容値．$\tilde{P}_L$
+          は $30$\% を下回るシナリオの発生確率の許容値．
+    \item $\tilde{C}_U, \tilde{C}_L$: 最終時刻における蓄電量の期待値
+          の上下限．
+    \item $M$: 非常に大きな正の定数（いわゆる big-M として利用する）
+      \end{itemize}
+\item 変数
+      \begin{itemize}
+    \item $WB_t$: 時刻 $t$ において，発電機（発電器？）で発電した電
+          気のうち，蓄電池に蓄電される電気量の期待値
+    \item $WG_t$: 時刻 $t$ において，発電機（発電器？）で発電した電
+          気のうち，電力購入会社へ売電される電気量の期待値
+    \item $BG_t$: 時刻 $t$ において，蓄電池にある電気のうち，電力購入
+          会社へ売電される電気量の期待値
+          \begin{itemize}
+          \item $WG_t + BG_t$: 時刻 $t$ において電力購入会社へ売電さ
+            れる電気量の期待値（= 電力購入会社への売電通告量）
+          \end{itemize}
+    \item $C_{ts}$: 時刻 $t$ におけるシナリオ $s$ においての蓄電量
+    \item $\delta^{1U}_{ts}, \delta^{1L}_{ts}, \delta^{2U}_{ts},
+          \delta^{2L}_{ts}$: 中間変数（$0\mathchar`-1$ 変数）
+    \item $v^U_{ts}, v^L_{ts}$: 中間変数
+      \end{itemize}
+\end{itemize}
+
+@@@「風力発電設備の運用が破綻する」という状態について，ここより前に記載し
+ておく必要がある．運用が破綻した状態とは，蓄電池での蓄電量が，蓄電池の容
+量(?)に対して一定の範囲内に収まってないことをいう．ここでいう「一定の範囲」
+は施設によって定められるが，$30$\% から $70$\% 程度の範囲を指すことが多い
+（@@@ ほんとか？）．
+
+@@@ $n$ 期であることを明確に
+
+\subsection{目的関数}
+
+ここでは，提案するモデルの目的関数について説明する．
+
+本モデルの目的は，（\ref{subsec:constraints} 節で示す制約条件の下で）売電
+価格の合計を最大化することである．売電価格は，次式のように書くことができ
+る：
+%
+\begin{eqnarray}
+\sum_{t = 1}^n r_t \cdot (WG_t + BG_t)
+  \label{eq:obj}
+\end{eqnarray}
+%
+（@@@ あとで若干の修正をするかも）
+
+\subsection{制約条件}
+\label{subsec:constraints}
+
+ここでは，提案するモデルの制約条件について説明する．
+
+提案するモデルでは，大きく分けて次の…
+
+\begin{eqnarray}
+WB_t + WG_t = \sum_{s \in S} P_{ts} w_{ts}
+  \label{eq:con1}
+\end{eqnarray}
+
+\begin{eqnarray}
+&& - M (1 - \delta^{1L}_{ts})
+  \le 0.98 (WG_t + BG_t) - w_{ts}
+  \le M \delta^{1L}_{ts}
+  \label{eq:con2} \\
+&& v^L_{ts} - M (1 - \delta^{1L}_{ts})
+  \le 0.98 (WG_t + BG_t) - w_{ts}
+  \le v^L_{ts} + M (1 - \delta^{1L}_{ts})
+  \label{eq:con3} \\
+&& - M \delta^{1L}_{ts} \le v^L_{ts} \le M \delta^{1L}_{ts}
+  \label{eq:con4}
+\end{eqnarray}
+
+\begin{eqnarray}
+&& - M (1 - \delta^{1U}_{ts})
+  \le w_{ts} - 1.02 (WG_t + BG_t)
+  \le M \delta^{1U}_{ts}
+  \label{eq:con5} \\
+&& v^U_{ts} - M (1 - \delta^{1U}_{ts})
+  \le w_{ts} - 1.02 (WG_t + BG_t)
+  \le v^U_{ts} + M (1 - \delta^{1U}_{ts})
+  \label{eq:con6} \\
+&& - M \delta^{1U}_{ts} \le v^U_{ts} \le M \delta^{1U}_{ts}
+  \label{eq:con7}
+\end{eqnarray}
+
+\begin{eqnarray}
+C_{ts} = C_{t-1,\tilde{s}(s)} - \frac{1}{0.9} v^L_{ts} + 0.95 v^U_{ts}
+  - Const
+  \label{eq:con8}
+\end{eqnarray}
+
+\begin{eqnarray}
+&& - M (1 - \delta^{2L}_{ts})
+  \le 0.3 CA - C_{ts}
+  \le M \delta^{2L}_{ts}
+  \label{eq:con9} \\
+&& - M (1 - \delta^{2U}_{ts})
+  \le C_{ts} - 0.7 CA
+  \le M \delta^{2U}_{ts}
+  \label{eq:con10}
+\end{eqnarray}
+
+\begin{eqnarray}
+&& \sum_{s \in S} \delta^{2U}_{ts} P_{ts}
+  \le \tilde{P}_U
+  \label{eq:con11} \\
+&& \sum_{s \in S} \delta^{2L}_{ts} P_{ts}
+  \le \tilde{P}_L
+  \label{eq:con12}
+\end{eqnarray}
+
+\begin{eqnarray}
+\tilde{C}_L
+  \le \sum_{s \in S} C_{ns}
+  \le \tilde{C}_U
+  \label{eq:con13}
+\end{eqnarray}
+
+\subsection{解くべき最適化問題}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+\bibitem{BT95}
+P. T. Boggs and J. W. Tolle,
+Sequential Quadratic Programming,
+{\it Acta Numerica}, (1995), 1-51.
+\end{thebibliography}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% End of file %%%%%

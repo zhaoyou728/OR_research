@@ -1,0 +1,111 @@
+
+c:\tomcat8.5\bin>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_57min_5team_40min 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_57min_5team_40min>glpsol -d 120_with_pump_whity_57min_5team.dat -m waterstop_5_180114_kadou40.mod --check --wcpxlp waterstop_5_180114_kadou40.lp 
+Reading model section from waterstop_5_180114_kadou40.mod...
+waterstop_5_180114_kadou40.mod:60: warning: unexpected end of file; missing end statement inserted
+60 lines were read
+Reading data section from 120_with_pump_whity_57min_5team.dat...
+946 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Generating TimeLimit...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `waterstop_5_180114_kadou40.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_57min_5team_40min>gurobi_cl ResultFile=waterstop_5_180114_kadou40.sol LogFile=waterstop_5_180114_kadou40.log TimeLimit=3600 Threads=4 waterstop_5_180114_kadou40.lp 
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_kadou40.lp
+Reading time = 0.20 seconds
+Objective: 39867 rows, 14055 columns, 154930 nonzeros
+Optimize a model with 39867 rows, 14055 columns and 154930 nonzeros
+Variable types: 90 continuous, 13965 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 18215 rows and 2870 columns
+Presolve time: 1.18s
+Presolved: 21652 rows, 11185 columns, 86975 nonzeros
+Variable types: 55 continuous, 11130 integer (11130 binary)
+
+Root relaxation: objective 0.000000e+00, 4672 iterations, 1.12 seconds
+Total elapsed time = 5.11s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   74          -    0.00000      -     -    5s
+     0     0    0.00000    0  106          -    0.00000      -     -    6s
+     0     0    0.00000    0   81          -    0.00000      -     -    7s
+     0     0    0.00000    0  136          -    0.00000      -     -    7s
+     0     0    0.00000    0  132          -    0.00000      -     -    8s
+     0     0    0.00000    0   59          -    0.00000      -     -   13s
+     0     0    0.00000    0   50          -    0.00000      -     -   17s
+H    0     0                      37.9090909    0.00000   100%     -   17s
+     0     0    0.00000    0   69   37.90909    0.00000   100%     -   20s
+     0     0    0.00000    0   38   37.90909    0.00000   100%     -   23s
+     0     0    0.00000    0   37   37.90909    0.00000   100%     -   24s
+     0     0    0.00000    0   71   37.90909    0.00000   100%     -   28s
+     0     0    0.00000    0   65   37.90909    0.00000   100%     -   29s
+     0     0    0.00000    0   48   37.90909    0.00000   100%     -   35s
+     0     0    0.00000    0   48   37.90909    0.00000   100%     -   37s
+H    0     0                      17.9393939    0.00000   100%     -   40s
+H    0     0                      13.4545455    0.00000   100%     -   41s
+     0     2    0.00000    0   50   13.45455    0.00000   100%     -   46s
+     7    12    0.00000    3  118   13.45455    0.00000   100%  3465   50s
+    30    28    0.00000    6   86   13.45455    0.00000   100%  1277   56s
+    69    54    0.00000   12  112   13.45455    0.00000   100%   875   61s
+   148    94    2.86236   23  121   13.45455    0.00000   100%   599   69s
+   156    97    6.65588   25  120   13.45455    0.00000   100%   599   70s
+   233   151    6.03030   47   38   13.45455    0.00000   100%   543   75s
+H  237   119                       9.9393939    0.00000   100%   540   75s
+   288   149    6.03030   67   98    9.93939    0.00000   100%   533   82s
+   375   203     cutoff  109         9.93939    0.00000   100%   487   93s
+   424   215    0.00000    7   89    9.93939    0.00000   100%   509  100s
+   466   227    0.00000   10  186    9.93939    0.00000   100%   584  106s
+   488   240    2.64443   11  250    9.93939    0.00000   100%   599  111s
+   555   284    6.03030   29  118    9.93939    0.00000   100%   606  118s
+   559   283    6.03030   30   80    9.93939    0.00000   100%   607  121s
+   733   386    2.10047   11   90    9.93939    0.00000   100%   572  127s
+   792   427    6.03030   22   91    9.93939    0.00000   100%   569  132s
+   905   525    6.03030   42   79    9.93939    0.00000   100%   556  135s
+  1009   599    6.03030   74  152    9.93939    0.00000   100%   550  142s
+  1072   638    6.03030   73   48    9.93939    0.00000   100%   552  154s
+  1074   639    6.03030   33   86    9.93939    0.00000   100%   551  161s
+H 1074   607                       6.0303030    0.00000   100%   551  171s
+
+Cutting planes:
+  Gomory: 1
+  Implied bound: 8
+  Clique: 2
+  MIR: 2
+  Flow cover: 3
+  Zero half: 1
+
+Explored 1074 nodes (738004 simplex iterations) in 171.66 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 5: 6.0303 9.93939 13.4545 ... 37.9091
+Pool objective bound 6.0303
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.030303030303e+00, best bound 6.030303030303e+00, gap 0.0000%
+
+Wrote result file 'waterstop_5_180114_kadou40.sol'
+

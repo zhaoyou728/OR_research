@@ -1,0 +1,72 @@
+
+Gurobi 7.0.1 (win64) logging started 02/06/18 14:40:17
+
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_2.lp
+Reading time = 0.77 seconds
+Objective: 119484 rows, 41976 columns, 643182 nonzeros
+Optimize a model with 119484 rows, 41976 columns and 643182 nonzeros
+Variable types: 270 continuous, 41706 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 44466 rows and 4638 columns
+Presolve time: 3.94s
+Presolved: 75018 rows, 37338 columns, 294162 nonzeros
+Variable types: 168 continuous, 37170 integer (37170 binary)
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+     800    3.6527930e-06   1.574158e+03   0.000000e+00      5s
+    7371    0.0000000e+00   0.000000e+00   0.000000e+00      8s
+
+Root relaxation: objective 0.000000e+00, 7371 iterations, 2.78 seconds
+Total elapsed time = 20.95s
+Total elapsed time = 32.89s
+Total elapsed time = 35.10s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0  194          -    0.00000      -     -   35s
+     0     0    0.00000    0  610          -    0.00000      -     -   43s
+     0     0    0.00000    0  370          -    0.00000      -     -   70s
+     0     0    0.00000    0  675          -    0.00000      -     -   75s
+     0     0    0.00000    0  352          -    0.00000      -     -   83s
+     0     0    0.00000    0  456          -    0.00000      -     -   89s
+     0     0    0.00000    0  489          -    0.00000      -     -  112s
+     0     0    0.00000    0  683          -    0.00000      -     -  157s
+     0     0    0.00000    0  251          -    0.00000      -     -  181s
+     0     0    0.00000    0  484          -    0.00000      -     -  184s
+H    0     0                      18.0000000    0.00000   100%     -  186s
+     0     0    0.00000    0  212   18.00000    0.00000   100%     -  198s
+H    0     0                      15.7575758    0.00000   100%     -  199s
+     0     0    0.00000    0   56   15.75758    0.00000   100%     -  210s
+H    0     0                       8.4848485    0.00000   100%     -  211s
+     0     0    0.00000    0   85    8.48485    0.00000   100%     -  221s
+     0     0    0.00000    0   29    8.48485    0.00000   100%     -  229s
+H    0     0                       0.0000000    0.00000      -     -  230s
+
+Cutting planes:
+  Clique: 32
+  Zero half: 2
+
+Explored 0 nodes (323178 simplex iterations) in 230.62 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 4: 0 8.48485 15.7576 18 
+Pool objective bound 0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap -
+
+Wrote result file 'waterstop_5_180114_2.sol'
+

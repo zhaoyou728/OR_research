@@ -1,0 +1,77 @@
+
+Gurobi 7.0.1 (win64) logging started 01/28/18 02:03:22
+
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_2.lp
+Reading time = 0.18 seconds
+Objective: 39862 rows, 14055 columns, 154925 nonzeros
+Optimize a model with 39862 rows, 14055 columns and 154925 nonzeros
+Variable types: 90 continuous, 13965 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 18215 rows and 2875 columns
+Presolve time: 1.00s
+Presolved: 21647 rows, 11180 columns, 87035 nonzeros
+Variable types: 50 continuous, 11130 integer (11130 binary)
+
+Root relaxation: objective 0.000000e+00, 3938 iterations, 0.96 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   66          -    0.00000      -     -    4s
+H    0     0                      41.5151515    0.00000   100%     -    5s
+     0     0    0.00000    0  122   41.51515    0.00000   100%     -    6s
+H    0     0                      30.0909091    0.00000   100%     -    7s
+     0     0    0.00000    0  120   30.09091    0.00000   100%     -    7s
+     0     0    0.00000    0   97   30.09091    0.00000   100%     -    7s
+     0     0    0.00000    0  127   30.09091    0.00000   100%     -    9s
+H    0     0                      21.5454545    0.00000   100%     -   11s
+     0     0    0.00000    0  127   21.54545    0.00000   100%     -   11s
+     0     0    0.00000    0   55   21.54545    0.00000   100%     -   13s
+     0     0    0.00000    0   70   21.54545    0.00000   100%     -   13s
+     0     0    0.00000    0   71   21.54545    0.00000   100%     -   14s
+     0     0    0.00000    0   76   21.54545    0.00000   100%     -   14s
+     0     0    0.00000    0   91   21.54545    0.00000   100%     -   16s
+     0     0    0.00000    0   24   21.54545    0.00000   100%     -   18s
+     0     0    0.00000    0   32   21.54545    0.00000   100%     -   19s
+     0     0    0.00000    0   32   21.54545    0.00000   100%     -   19s
+     0     2    0.00000    0   30   21.54545    0.00000   100%     -   20s
+    48    38    0.00000    9  104   21.54545    0.00000   100%   465   25s
+H   97    50                      16.7575758    0.00000   100%   381   29s
+    99    55    1.31765   14  136   16.75758    0.00000   100%   392   30s
+   204   118    1.37174   20  125   16.75758    0.00000   100%   356   35s
+   426   247   15.51679   29  145   16.75758    0.00000   100%   340   40s
+   597   375    6.03030   49   70   16.75758    0.00000   100%   342   45s
+H  600   341                      14.6060606    0.00000   100%   342   45s
+H  613   339                      14.0909091    0.00000   100%   342   45s
+   822   498    6.03030   97   78   14.09091    0.00000   100%   351   50s
+H  861   508                      13.9696970    0.00000   100%   346   50s
+H  890   433                      12.4242424    0.00000   100%   345   50s
+  1049   472    6.03030   95   32   12.42424    0.00000   100%   327   63s
+H 1050   449                       6.9090909    0.00000   100%   326   67s
+  1053   451    6.90909   21  117    6.90909    0.00000   100%   325   70s
+  1058   455    0.00000    8   80    6.90909    0.00000   100%   347   78s
+H 1058   432                       6.0303030    0.00000   100%   347   79s
+  1060   434    6.03030   21   35    6.03030    0.00000   100%   346   82s
+  1062   435    1.34266   31   80    6.03030    0.00000   100%   346   85s
+
+Explored 1066 nodes (478246 simplex iterations) in 89.58 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 10: 6.0303 6.90909 12.4242 ... 41.5152
+Pool objective bound 6.0303
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.030303030303e+00, best bound 6.030303030303e+00, gap 0.0000%
+
+Wrote result file 'waterstop_5_180114_2.sol'
+

@@ -1,0 +1,104 @@
+\documentclass[11pt,a4paper]{jsarticle}
+%
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage[dvipdfm]{graphicx}
+\usepackage{ascmac}
+\usepackage{float}
+%
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{39\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.5in}
+\setlength{\headsep}{0.3in}
+%
+\newcommand{\divergence}{\mathrm{div}\,}  %ダイバージェンス
+\newcommand{\grad}{\mathrm{grad}\,}  %グラディエント
+\newcommand{\rot}{\mathrm{rot}\,}  %ローテーション
+%
+\pagestyle{myheadings}
+\markright{}
+\begin{document}
+%
+%
+\section*{前年度の運用計画のモデル}
+\begin{flushleft}
+【昼間の運用計画のモデル】
+
+蓄電池に十分充電ができており、夜間に充電した電力を売りたいとき
+
+（T ＞ bc(100 - s)/100[kw])
+\end{flushleft}
+
+\begin{flushleft}
+　　　＊送電量：102X(1 - (q/100))/100
+
+　　　＊充電量：X(1 - (q/100))(-2 + p)/100
+\end{flushleft}
+
+\begin{flushleft}
+蓄電池の容量が維持充電量となったとき(T = bc(100 - s)/100[kw])
+\end{flushleft}
+
+\begin{flushleft}
+　　- (p ＜ -2)の時
+
+　　　＊送電量：102X(1 - (q/100))/100
+
+　　　＊充電量：X(1 - (q/100))(-2 + p)/100
+\end{flushleft}
+
+\begin{flushleft}
+　　- (-2 \hspace{0.3em}\raisebox{0.4ex}{$<$}\hspace{-0.75em}\raisebox{-.7ex}{=}\hspace{0.3em} p \hspace{0.3em}\raisebox{0.4ex}{$<$}\hspace{-0.75em}\raisebox{-.7ex}{=}\hspace{0.3em} 2)の時
+
+　　　＊送電量：X(1 - (q/100))(1 + (p/100)
+
+　　　＊充電量：0
+\end{flushleft}
+
+\begin{flushleft}
+　　- (p ＞ 2)の時
+
+　　　＊送電量：102X(1 - (q/100))/100
+
+　　　＊充電量：X(1 - (q/100))(2 + p)/100
+\end{flushleft}
+
+
+\begin{flushleft}
+【夜間の運用計画のモデル】
+
+蓄電池の容量がマージン以下で充電したいとき
+
+(T = bc × (100 - r)/100[kw])
+\end{flushleft}
+
+\begin{flushleft}
+　　- (p ＜ 2)の時
+
+　　　＊送電量：102X(1 - (q/100))/100
+
+　　　＊充電量：X(1 - (q/100))(-2 + p)/100
+\end{flushleft}
+
+\begin{flushleft}
+　　- (-2 \hspace{0.3em}\raisebox{0.4ex}{$<$}\hspace{-0.75em}\raisebox{-.7ex}{=}\hspace{0.3em} p \hspace{0.3em}\raisebox{0.4ex}{$<$}\hspace{-0.75em}\raisebox{-.7ex}{=}\hspace{0.3em} 2)の時
+
+　　　＊送電量：X(1 - (q/100))(1 + (p/100))
+
+　　　＊充電量：0
+\end{flushleft}
+
+\begin{flushleft}
+　　- (p ＞ 2)の時
+
+　　　＊送電量：102X(1 - (q/100))/100
+
+　　　＊充電量：X(1 - (q/100))(-2 + p)/100
+
+\end{flushleft}
+
+
+%
+%
+\end{document}

@@ -1,0 +1,10 @@
+var x >= 0.0;
+var y >= 0.0;
+
+minimize Objective: - x - y;
+
+subject to C1:
+	3 * x1 + 2 * x2 <= 12;
+
+subject to C2:
+	x1 + 2 * x2 <= 8;

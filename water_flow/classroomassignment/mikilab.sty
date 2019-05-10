@@ -1,0 +1,169 @@
+%--------------------------------------------------------------%
+%   Style File for The Monthly Lecture Meeting                 %
+%   at Inteligent System Design Laboratory, Doshisha Univ.     %
+%   Designed by  LaTeX Team (Jun-ichi YOSHIDA/junichi@mikilab) %
+%   Redesigned by LaTeX Team 2002(Takanori MIZUTA/taka@mikilab)%
+%--------------------------------------------------------------%
+%   $Id: mikilab.sty,v 1.1.1.1 2004/06/19 10:08:08 junjis Exp $
+%--------------------------------------------------------------%
+
+%----------------------------------------------------------------
+% 他のスタイルのインクルード
+%----------------------------------------------------------------
+\usepackage{mikibase}
+
+%----------------------------------------------------------------
+% ページのレイアウト
+%----------------------------------------------------------------
+\topmargin=-0.8cm
+\headheight=0cm
+\headsep=0cm  \footskip=0cm
+\oddsidemargin=-0.85cm  \evensidemargin=-0.85cm
+\textheight=25.1cm  \textwidth=17.6cm
+\footskip=1.5cm
+\columnsep=1.0cm
+
+
+%----------------------------------------------------------------
+% sectionなどの再定義
+%----------------------------------------------------------------
+
+%sectionの再定義%
+
+\renewcommand{\section}{%
+	\@startsection{section}{1}{\z@}%
+	{.5\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	{.2\Cvs \@plus.3\Cdp}%
+	{\reset@font\large\bfseries}}
+
+%subsectionの再定義%
+
+\renewcommand{\subsection}{%
+	\@startsection{subsection}{1}{\z@}%
+	{.3\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	{.2\Cvs \@plus.3\Cdp}%
+	{\reset@font\bfseries}}
+
+\renewcommand{\subsubsection}{%
+	\@startsection{subsubsection}{1}{\z@}%
+	{.2\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	{.1\Cvs \@plus.3\Cdp}%
+	{\reset@font\bfseries}}
+%\renewcommand{\thesection}{\@Roman\c@section}%
+
+
+
+%----------------------------------------------------------------
+% ヘッダ部分
+%----------------------------------------------------------------
+%タイトル
+\def\title#1#2{%
+	{\bf {\Large {#1}}\\ %
+	\smallskip {#2}}\\ \bigskip%
+}
+
+\def\author#1#2{%
+	\large{#1}\\%
+	\smallskip%
+	\small{#2}
+}
+
+
+%ヘッダの先頭
+\def\beginheader#1#2#3{
+	\setlength{\baselineskip}{13.0pt}
+	{\small{\bf 第#1回 月例発表会（#2年#3月）
+	\hfill 知的システムデザイン研究室}}\medskip\\
+	\begin{picture}(500,3)
+		\put(0,2){\line(1,0){500}}
+	\end{picture}
+	\begin{center}
+}
+
+%ヘッダの最後
+\def\endheader{
+\begin{picture}(500,3)
+	\put(0,2){\line(1,0){500}}
+\end{picture}
+\end{center}
+}
+
+
+
+%--------------------------------------------------------------
+%引用記号の再定義
+%--------------------------------------------------------------
+%LaTeX階梯　p.206
+
+\def\@biblabel#1{#1)}
+\def\@cite#1#2{{$^{\mbox{\scriptsize $#1$}}$%
+	\if@tempswa , #2\fi}$^{\mbox{\scriptsize $)$}}$ }
+	
+%--------------------------------------------------------------
+%BiBTeX中のURL表示の再定義
+%要 url.sty(mikibaseにて取り込み)
+%--------------------------------------------------------------
+\renewcommand{\url}{\begingroup \urlstyle{tt}\Url}
+
+
+%--------------------------------------------------------------
+%キャプションの：を削除．図をFig,表をTableに
+%--------------------------------------------------------------
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \iftdir\sbox\@tempboxa{#1\hskip1zw#2}%
+    \else\sbox\@tempboxa{#1\hskip1zw #2}%
+  \fi
+  \ifdim \wd\@tempboxa >\hsize
+    \iftdir #1\hskip1zw#2\relax\par
+      \else #1\hskip1zw #2\relax\par\fi
+  \else
+    \global \@minipagefalse
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+%--------------------------------------------------------------
+%図表及び数式の参照方法を定義
+%--------------------------------------------------------------
+\def\fgref#1{\figurename\hskip1ex \ref{#1}}
+\def\tbref#1{\tablename\hskip1ex \ref{#1}}
+\def\eqref#1{式(\ref{#1})}
+
+
+%--------------------------------------------------------------
+%abstract環境の更新
+%--------------------------------------------------------------
+
+\renewenvironment{abstract}{%
+\begin{center}\begin{minipage}{14cm}{\bf Abstract:}\small%
+}%
+{\end{minipage}\end{center}}
+
+
+%--------------------------------------------------------------
+%1999年度版mikilab互換コマンド
+%--------------------------------------------------------------
+
+\def\month#1#2#3{%
+	{\noindent\small\bfseries 月例発表会　%
+	Vol. {#3}({#1}年{#2}月)\hfill 知的システムデザイン研究室}\bigskip%
+}
+
+
+
+\def\subject#1#2{%
+	{\bf {\Large {#1}}\\ %
+	\medskip {#2}}\\ \bigskip%
+}
+
+\def\name#1#2{%
+	\large{#1}（知的システムデザイン研究室）\\%
+	{#2} (Intelligent Systems Design Laboratory)\\%
+	\bigskip%
+}
+
+%

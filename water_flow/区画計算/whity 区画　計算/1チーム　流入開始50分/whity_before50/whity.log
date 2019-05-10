@@ -1,0 +1,93 @@
+
+Gurobi 7.0.1 (win64) logging started 12/06/17 13:25:57
+
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file whity.lp
+Reading time = 0.03 seconds
+Objective: 4428 rows, 1631 columns, 20796 nonzeros
+Optimize a model with 4428 rows, 1631 columns and 20796 nonzeros
+Variable types: 36 continuous, 1595 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [7e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 1832 rows and 268 columns
+Presolve time: 0.08s
+Presolved: 2596 rows, 1363 columns, 10248 nonzeros
+Variable types: 21 continuous, 1342 integer (1342 binary)
+Found heuristic solution: objective 245.1212121
+
+Root relaxation: objective 0.000000e+00, 758 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   24  245.12121    0.00000   100%     -    0s
+H    0     0                      53.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   84   53.00000    0.00000   100%     -    0s
+H    0     0                      52.0000000    0.00000   100%     -    0s
+H    0     0                      37.2424242    0.00000   100%     -    0s
+     0     0    0.00000    0   75   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   83   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   83   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   89   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   88   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   48   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   42   37.24242    0.00000   100%     -    0s
+     0     0    0.00000    0   35   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   35   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   39   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   42   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   55   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   37   37.24242    0.00000   100%     -    1s
+     0     0    0.00000    0   33   37.24242    0.00000   100%     -    1s
+     0     2    0.00000    0   33   37.24242    0.00000   100%     -    1s
+H   32    28                      28.7575758    0.00000   100%   147    2s
+H  202   125                      22.6969697    0.00000   100%  81.1    2s
+H  587   247                      21.6060606    0.00000   100%  81.8    3s
+H  673   265                      21.4242424    0.00000   100%  86.5    4s
+   942   317    0.11373   24   75   21.42424    0.00000   100%  87.1    5s
+H 1426   431                      21.0303030    0.00000   100%  83.6    5s
+  2288   716   17.55996   13  115   21.03030    0.00000   100%  84.1   10s
+  2299   724    9.66233    4  114   21.03030    0.00000   100%  83.7   15s
+  2308   735    0.00000   15   64   21.03030    0.00000   100%   108   20s
+  2437   768    0.00000   27   42   21.03030    0.00000   100%   113   25s
+H 2441   730                      17.6060606    0.00000   100%   113   25s
+  2807   704    0.00000   56   51   17.60606    0.00000   100%   113   30s
+  3356   591     cutoff   45        17.60606    0.00000   100%   113   35s
+  4288   507    5.10606   32   72   17.60606    0.00000   100%   111   40s
+  5193   729    3.72393   64   57   17.60606    0.00000   100%   109   45s
+  6409  1138    0.15498   44  101   17.60606    0.00000   100%   103   50s
+  8977  1826    7.43211   41   62   17.60606    1.00000  94.3%  89.8   55s
+ 11305  2164    8.47308   19  100   17.60606    2.67958  84.8%  82.2   60s
+ 14084  2224     cutoff   24        17.60606    5.10606  71.0%  75.9   65s
+H15214  2325                      17.2121212    5.72727  66.7%  73.9   68s
+H15215  2315                      16.7878788    5.72727  65.9%  73.9   68s
+ 16169  2461   11.74587   27   87   16.78788    5.72727  65.9%  72.9   70s
+ 18300  2606     cutoff   50        16.78788    6.57576  60.8%  70.9   75s
+ 20732  2199     cutoff   58        16.78788    8.00928  52.3%  68.2   80s
+ 25590     0     cutoff   37        16.78788   15.64776  6.79%  61.7   85s
+
+Cutting planes:
+  Implied bound: 30
+  MIR: 6
+  Inf proof: 1
+  Zero half: 2
+
+Explored 25674 nodes (1599981 simplex iterations) in 85.01 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 10: 16.7879 17.2121 17.6061 ... 52
+Pool objective bound 16.7879
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.678787878788e+01, best bound 1.678787878788e+01, gap 0.0000%
+
+Wrote result file 'whity.sol'
+

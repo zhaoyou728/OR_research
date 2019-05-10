@@ -1,0 +1,97 @@
+
+c:\tomcat8.5\bin>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_5team_no30 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_5team_no30>glpsol -d 120_with_pump_whity_43min_5team.dat -m waterstop_5_180114_2.mod --check --wcpxlp waterstop_5_180114_2.lp 
+Reading model section from waterstop_5_180114_2.mod...
+waterstop_5_180114_2.mod:60: warning: unexpected end of file; missing end statement inserted
+60 lines were read
+Reading data section from 120_with_pump_whity_43min_5team.dat...
+946 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `waterstop_5_180114_2.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\120_43_5team_no30>gurobi_cl ResultFile=waterstop_5_180114_2.sol LogFile=waterstop_5_180114_2.log TimeLimit=3600 Threads=4 waterstop_5_180114_2.lp 
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_2.lp
+Reading time = 0.64 seconds
+Objective: 99577 rows, 34980 columns, 535985 nonzeros
+Optimize a model with 99577 rows, 34980 columns and 535985 nonzeros
+Variable types: 225 continuous, 34755 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 37055 rows and 3865 columns
+Presolve time: 3.27s
+Presolved: 62522 rows, 31115 columns, 245135 nonzeros
+Variable types: 140 continuous, 30975 integer (30975 binary)
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+    4854    7.1720276e-05   1.836649e+02   0.000000e+00      5s
+    7410    0.0000000e+00   0.000000e+00   0.000000e+00      7s
+
+Root relaxation: objective 0.000000e+00, 7410 iterations, 2.52 seconds
+Total elapsed time = 12.03s
+Total elapsed time = 17.65s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0  227          -    0.00000      -     -   21s
+     0     0    0.00000    0  658          -    0.00000      -     -   43s
+     0     0    0.00000    0  627          -    0.00000      -     -   52s
+     0     0    0.00000    0  589          -    0.00000      -     -   58s
+     0     0    0.00000    0  428          -    0.00000      -     -   65s
+     0     0    0.00000    0  645          -    0.00000      -     -   69s
+     0     0    0.00000    0  544          -    0.00000      -     -   73s
+     0     0    0.00000    0  406          -    0.00000      -     -   75s
+     0     0    0.00000    0  314          -    0.00000      -     -  111s
+     0     0    0.00000    0  783          -    0.00000      -     -  115s
+     0     0    0.00000    0  298          -    0.00000      -     -  175s
+     0     0    0.00000    0  459          -    0.00000      -     -  181s
+H    0     0                     698.0000000    0.00000   100%     -  183s
+     0     0    0.00000    0  198  698.00000    0.00000   100%     -  257s
+H    0     0                     693.5151515    0.00000   100%     -  258s
+     0     0    0.00000    0  301  693.51515    0.00000   100%     -  262s
+     0     0    0.00000    0  214  693.51515    0.00000   100%     -  327s
+H    0     0                     500.8787879    0.00000   100%     -  333s
+     0     0    0.00000    0  297  500.87879    0.00000   100%     -  335s
+     0     0    0.00000    0  236  500.87879    0.00000   100%     -  361s
+     0     0    0.00000    0  236  500.87879    0.00000   100%     -  373s
+H    0     0                       0.0000000    0.00000      -     -  402s
+
+Cutting planes:
+  Clique: 16
+  MIR: 2
+  Zero half: 5
+
+Explored 0 nodes (411487 simplex iterations) in 402.29 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 4: 0 500.879 693.515 698 
+Pool objective bound 0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap -
+
+Wrote result file 'waterstop_5_180114_2.sol'
+

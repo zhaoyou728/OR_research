@@ -1,0 +1,144 @@
+
+C:\tomcat8.5>cd C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity_2team_settitime5 
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity_2team_settitime5>glpsol -m waterstop.mod -d whity_2team_settitime5.dat --check --wcpxlp whity_2team_settitime5.lp 
+Reading model section from waterstop.mod...
+waterstop.mod:54: warning: unexpected end of file; missing end statement inserted
+54 lines were read
+Reading data section from whity_2team_settitime5.dat...
+276 lines were read
+Generating Objective...
+Generating InitialPosition...
+Generating AllWaterstop...
+Generating OneByOne...
+Generating SequentialInstall...
+Generating UsingEdge_1...
+Generating UsingEdge_2...
+Generating UsingEdge_3...
+Generating InstallingTime...
+Generating IdealInstallingTime...
+Generating DelayTime...
+Model has been successfully generated
+lpx_write_cpxlp: writing problem data to `whity_2team_settitime5.lp'...
+
+C:\home\sumitomo\sol-server\system\Upfiles\m2s1x2\prj\whity_2team_settitime5>gurobi_cl ResultFile=whity_2team_settitime5.sol LogFile=whity_2team_settitime5.log TimeLimit=86400 Threads=4 whity_2team_settitime5.lp 
+Set parameter TimeLimit to value 86400
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file whity_2team_settitime5.lp
+Reading time = 0.03 seconds
+Objective: 5898 rows, 2182 columns, 24216 nonzeros
+Optimize a model with 5898 rows, 2182 columns and 24216 nonzeros
+Variable types: 48 continuous, 2134 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [7e-01, 5e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 5e+02]
+Presolve removed 2600 rows and 440 columns
+Presolve time: 0.13s
+Presolved: 3298 rows, 1742 columns, 13072 nonzeros
+Variable types: 26 continuous, 1716 integer (1716 binary)
+Found heuristic solution: objective 112.1515152
+
+Root relaxation: objective 0.000000e+00, 772 iterations, 0.05 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   33  112.15152    0.00000   100%     -    0s
+H    0     0                      75.9696970    0.00000   100%     -    0s
+     0     0    0.00000    0   98   75.96970    0.00000   100%     -    0s
+     0     0    0.00000    0   98   75.96970    0.00000   100%     -    0s
+H    0     0                      68.1212121    0.00000   100%     -    0s
+     0     0    0.00000    0  100   68.12121    0.00000   100%     -    0s
+     0     0    0.00000    0   98   68.12121    0.00000   100%     -    0s
+H    0     0                      67.8484848    0.00000   100%     -    1s
+     0     0    0.00000    0   28   67.84848    0.00000   100%     -    1s
+H    0     0                      65.2424242    0.00000   100%     -    1s
+     0     0    0.00000    0   28   65.24242    0.00000   100%     -    1s
+     0     0    5.05555    0   70   65.24242    5.05555  92.3%     -    1s
+     0     0    5.07469    0   71   65.24242    5.07469  92.2%     -    1s
+H    0     0                      62.0000000    5.07469  91.8%     -    1s
+     0     0    6.25741    0   80   62.00000    6.25741  89.9%     -    1s
+H    0     0                      61.5151515    6.25741  89.8%     -    1s
+     0     0    6.25741    0   80   61.51515    6.25741  89.8%     -    1s
+     0     0    9.00000    0   89   61.51515    9.00000  85.4%     -    1s
+     0     0    9.00000    0   89   61.51515    9.00000  85.4%     -    1s
+H    0     0                      56.3333333    9.00000  84.0%     -    1s
+     0     0    9.00000    0  103   56.33333    9.00000  84.0%     -    1s
+     0     0    9.00000    0  115   56.33333    9.00000  84.0%     -    1s
+H    0     0                      50.8787879    9.00000  82.3%     -    2s
+     0     0    9.00000    0   50   50.87879    9.00000  82.3%     -    2s
+     0     0    9.00000    0   52   50.87879    9.00000  82.3%     -    2s
+     0     0    9.00000    0   52   50.87879    9.00000  82.3%     -    2s
+     0     0    9.00000    0   63   50.87879    9.00000  82.3%     -    2s
+     0     0    9.09482    0   56   50.87879    9.09482  82.1%     -    2s
+     0     0   10.05716    0  108   50.87879   10.05716  80.2%     -    2s
+     0     0   11.04367    0  122   50.87879   11.04367  78.3%     -    2s
+H    0     0                      31.2727273   11.04367  64.7%     -    3s
+     0     0   11.66667    0  102   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0  104   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   96   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   85   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   85   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   71   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   74   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   70   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   67   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   60   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   62   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   56   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   56   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   60   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   58   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   49   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   49   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   30   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   29   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   32   31.27273   11.66667  62.7%     -    3s
+     0     0   11.66667    0   32   31.27273   11.66667  62.7%     -    3s
+     0     2   11.66667    0   32   31.27273   11.66667  62.7%     -    4s
+H   28    28                      27.0606061   11.66667  56.9%   253    4s
+H  105    59                      25.9090909   11.66667  55.0%   133    4s
+   133    81   11.68380   23   56   25.90909   11.66667  55.0%   136    5s
+H  505   233                      25.4242424   11.66667  54.1%   101    6s
+H  566   237                      24.3333333   11.66667  52.1%  98.6    6s
+  2071   703   19.31451   24   32   24.33333   11.66667  52.1%  75.1   10s
+H 2076   670                      22.8484848   11.66667  48.9%  74.9   11s
+H 2083   641                      21.1515152   11.66667  44.8%  74.7   12s
+  2113   650   11.66667   14   41   21.15152   11.66667  44.8%  91.3   15s
+  2713   657   14.69496   27   53   21.15152   11.66667  44.8%   102   20s
+  3795   505   12.39790   34   52   21.15152   11.66667  44.8%   102   25s
+  4985   690     cutoff   40        21.15152   11.66667  44.8%  98.9   30s
+  6332   928     cutoff   60        21.15152   11.69250  44.7%  95.1   35s
+  8330  1076   20.53997   56   59   21.15152   12.42786  41.2%  89.2   40s
+ 10465  1118     cutoff   31        21.15152   13.75758  35.0%  84.5   45s
+ 13174   985   17.52273   35   37   21.15152   15.48008  26.8%  79.9   50s
+ 14702   799   17.38248   43   26   21.15152   17.05357  19.4%  77.0   55s
+
+Cutting planes:
+  Gomory: 6
+  Cover: 14
+  Implied bound: 99
+  Clique: 1
+  MIR: 63
+  Flow cover: 33
+  GUB cover: 1
+  Inf proof: 1
+  Zero half: 12
+
+Explored 16474 nodes (1232295 simplex iterations) in 57.03 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 10: 21.1515 22.8485 24.3333 ... 61.5152
+Pool objective bound 21.1515
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.115151515152e+01, best bound 2.115151515152e+01, gap 0.0000%
+
+Wrote result file 'whity_2team_settitime5.sol'
+

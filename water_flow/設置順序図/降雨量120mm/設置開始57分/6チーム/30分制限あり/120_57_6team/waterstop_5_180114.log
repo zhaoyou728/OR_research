@@ -1,0 +1,93 @@
+
+Gurobi 7.0.1 (win64) logging started 01/26/18 16:10:03
+
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114.lp
+Reading time = 0.21 seconds
+Objective: 47832 rows, 16866 columns, 185916 nonzeros
+Optimize a model with 47832 rows, 16866 columns and 185916 nonzeros
+Variable types: 108 continuous, 16758 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 21865 rows and 3451 columns
+Presolve time: 1.26s
+Presolved: 25967 rows, 13415 columns, 104178 nonzeros
+Variable types: 66 continuous, 13349 integer (13349 binary)
+
+Root relaxation: objective 0.000000e+00, 6518 iterations, 1.65 seconds
+Total elapsed time = 6.00s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   73          -    0.00000      -     -    7s
+     0     0    0.00000    0  110          -    0.00000      -     -    8s
+     0     0    0.00000    0   83          -    0.00000      -     -   10s
+H    0     0                      12.0606061    0.00000   100%     -   11s
+     0     0    0.00000    0  163   12.06061    0.00000   100%     -   12s
+     0     0    0.00000    0  163   12.06061    0.00000   100%     -   13s
+H    0     0                      12.0606061    0.00000   100%     -   14s
+     0     0    0.00000    0   74   12.06061    0.00000   100%     -   19s
+     0     0    0.00000    0   97   12.06061    0.00000   100%     -   34s
+     0     0    0.00000    0   73   12.06061    0.00000   100%     -   41s
+     0     0    0.00000    0   92   12.06061    0.00000   100%     -   42s
+     0     0    0.00000    0  108   12.06061    0.00000   100%     -   53s
+     0     0    0.00000    0  120   12.06061    0.00000   100%     -   65s
+     0     0    0.00000    0  123   12.06061    0.00000   100%     -   76s
+     0     0    0.00000    0   83   12.06061    0.00000   100%     -   83s
+     0     2    0.00000    0   83   12.06061    0.00000   100%     -   93s
+     3     8    0.00000    2   98   12.06061    0.00000   100%  3361   95s
+    29    11    8.26667    7  205   12.06061    0.00000   100%   985  114s
+    35    12    0.00000    8  226   12.06061    0.00000   100%   959  116s
+    60    29    0.00000   11  124   12.06061    0.00000   100%   878  121s
+    94    62    0.00000   18  171   12.06061    0.00000   100%   850  125s
+   171   106    3.27956   30  109   12.06061    0.00000   100%   778  132s
+   218   133    3.30274   35  203   12.06061    0.00000   100%   774  135s
+   291   166    3.42179   44  133   12.06061    0.00000   100%   714  144s
+   296   169    3.38604   44  155   12.06061    0.00000   100%   717  147s
+   374   197 infeasible   58        12.06061    0.00000   100%   686  151s
+   520   288   11.39669   30  135   12.06061    0.00000   100%   631  157s
+   617   363    0.00000   20  114   12.06061    0.00000   100%   613  160s
+H  774   225                      11.0303030    0.00000   100%   575  163s
+   829   222    0.00000   28  173   11.03030    0.00000   100%   558  166s
+   919   275    6.03030   37  130   11.03030    0.00000   100%   576  173s
+   974   306 infeasible   43        11.03030    0.00000   100%   590  178s
+  1065   358    9.37524   10   83   11.03030    0.00000   100%   592  192s
+  1067   359    0.00000   26   88   11.03030    0.00000   100%   590  209s
+H 1067   341                      11.0303030    0.00000   100%   590  256s
+  1069   343    3.47202   39  100   11.03030    0.00000   100%   589  260s
+  1070   343    9.83783   45  181   11.03030    0.00000   100%   589  298s
+H 1070   325                       6.0303030    0.00000   100%   589  299s
+  1071   326    0.00000   20  219    6.03030    0.00000   100%   588  301s
+  1072   327    0.00000   22  266    6.03030    0.00000   100%   588  330s
+  1074   329    6.03030   65   83    6.03030    0.00000   100%   729  360s
+  1076   330    0.00000   18   93    6.03030    0.00000   100%   727  371s
+  1077   331    6.03030   45   66    6.03030    0.00000   100%   727  402s
+
+Cutting planes:
+  Cover: 1
+  Implied bound: 9
+  MIR: 2
+  Flow cover: 3
+  GUB cover: 1
+  Zero half: 1
+
+Explored 1077 nodes (1022981 simplex iterations) in 409.37 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 5: 6.0303 11.0303 11.0303 ... 12.0606
+Pool objective bound 6.0303
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.030303030303e+00, best bound 6.030303030303e+00, gap 0.0000%
+
+Wrote result file 'waterstop_5_180114.sol'
+

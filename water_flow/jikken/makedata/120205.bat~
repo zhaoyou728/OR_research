@@ -1,0 +1,11 @@
+.\makedata.exe -C 3 -T 3 -v 4.25 -v 4.75 -v 5.25 -v 5.75
+
+FOR %%M IN (0.05, 0.10, 0.15, 0.20, 0.25, 0.30) DO (
+	FOR %%R IN (0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00) DO (
+		.\makeConst.exe -M %%M -R %%R
+		glpsol.exe -m WFmodel_120205.mod -d Margin_%%M_Ratio_%%R.dat -d WFmodel_Term_3.dat -d Class_3_Term_3_data.dat --check --wlp WFModel_C3_T3_M%%M_R%%R.lp
+		scip-2.1.1.mingw.x86_64.intel.opt.spx.exe -c "read WFModel_C3_T3_M%%M_R%%R.lp" -c "optimize" -c "write" -c "solution" -c "WFModel_C3_T3_M%%M_R%%R.sol" -c "quit"
+	)
+)
+
+

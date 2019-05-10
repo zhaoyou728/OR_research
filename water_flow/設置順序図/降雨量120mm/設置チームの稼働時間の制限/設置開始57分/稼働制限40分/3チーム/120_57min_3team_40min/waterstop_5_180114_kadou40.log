@@ -1,0 +1,42 @@
+
+Gurobi 7.0.1 (win64) logging started 01/31/18 14:15:22
+
+Set parameter TimeLimit to value 3600
+Set parameter Threads to value 4
+
+Gurobi Optimizer version 7.0.1 build v7.0.1rc0 (win64)
+Copyright (c) 2016, Gurobi Optimization, Inc.
+
+Read LP format model from file waterstop_5_180114_kadou40.lp
+Reading time = 0.12 seconds
+Objective: 23937 rows, 8433 columns, 92958 nonzeros
+Optimize a model with 23937 rows, 8433 columns and 92958 nonzeros
+Variable types: 54 continuous, 8379 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 10929 rows and 1722 columns
+Presolve time: 0.71s
+Presolved: 13008 rows, 6711 columns, 52185 nonzeros
+Variable types: 33 continuous, 6678 integer (6678 binary)
+
+Root relaxation: infeasible, 2977 iterations, 0.33 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 infeasible    0               - infeasible      -     -    1s
+
+Explored 0 nodes (2977 simplex iterations) in 1.28 seconds
+Thread count was 4 (of 20 available processors)
+
+Solution count 0
+Pool objective bound 1e+100
+
+Model is infeasible
+Best objective -, best bound -, gap -
+
+Unable to retrieve attribute 'X'
+

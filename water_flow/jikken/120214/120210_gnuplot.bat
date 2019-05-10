@@ -1,0 +1,9 @@
+sed "s/xxxxx/stdout_C2_T3_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C2_T4_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C2_T5_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C2_T6_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C3_T3_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C3_T4_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C4_T3_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C4_T4_data_m/" make3Dgraph.plt | gnuplot
+sed "s/xxxxx/stdout_C4_T5_data_m/" make3Dgraph.plt | gnuplot
